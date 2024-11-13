@@ -52,7 +52,7 @@ http-server
 3. Используйте другие кнопки для дополнительных функций.
 
 ## Лицензия
-Этот проект лицензирован под лицензией <a href="https://github.com/yachayka/Hello-I-am-Lorem?tab=MIT-1-ov-file">MIT</a>.
+Этот проект лицензирован под лицензией <a href="https://github.com/yachayka/Hello-I-am-Lorem/blob/main/LICENSE">MIT</a>.
 
 ## Автор
 Разработано <a href="https://github.com/yachayka">yachayka</a>.
