@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Веб-приложение - Привет!</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Подключаем CSS файл -->
+</head>
+<body>
+    <header>
+        <h1> <a href=index.html>Привет!</a></h1>
+        <nav>
+            <ul>
+                <li><a href="index.html"> Главная</a></li>
+                <li><a href="results.html"> Тесты</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Привет! Меня зовут Лорем! А тебя как?</h2>
+        <input type="text" id="nameInput" placeholder="Введите ваше имя">
+        <div class="button-container">
+            <button id="greetButton">Приветствовать</button>
+            <button id="resetButton">Сбросить</button>
+            <button id="reverseNameButton">Перевернуть имя</button>
+            <button id="randomGreetingButton">Случайное приветствие</button>
+        </div>
+        <p id="greetingMessage" class="message"></p>
+        <p id="errorMessage" class="error"></p>
+    </main>
+    <script src="script.js"></script> <!-- Подключаем внешний JS файл -->
+    <script>
+        // Привязываем обработчики событий к кнопкам
+        document.getElementById('greetButton').onclick = greetUser;
+        document.getElementById('resetButton').onclick = reset;
+        document.getElementById('reverseNameButton').onclick = reverseName;
+        document.getElementById('randomGreetingButton').onclick = generateRandomGreeting;
+    </script>
+    <footer>
+        <section>
+            CC BY-NC-SA 4.0 2024-PRESENT © min2109
+        </section>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Результаты тестов</title>
+        <link rel="stylesheet" href="styles_r.css"> <!-- Подключаем CSS файл -->
+    </head>
+    <body>
+        
+    <header>
+        <h1> <a href=index.html>Привет!</a></h1>
+        <nav>
+            <ul>
+                <li><a href="index.html"> Главная</a></li>
+                <li><a href="results.html"> Тесты</a></li>
+            </ul>
+        </nav>
+    </header>
+        <div class="container">
+            <h1>Результаты тестов</h1>
+
+            <div class="summary" id="summary">
+                </div>
+
+            <div id="testSuites">
+            </div>
+        </div>
+
+        <script>
+            function updateTestResults(results) {
+                const summaryDiv = document.getElementById('summary');
+                summaryDiv.innerHTML = `
+                    <p><strong>Всего тестов:</strong> ${results.numTotalTests}</p>
+                    <p><strong>Пройденные тесты:</strong> ${results.numPassedTests}</p>
+                    <p><strong>Неудачные тесты:</strong> ${results.numFailedTests}</p>
+                    <p><strong>Тестовые наборы:</strong> ${results.numTotalTestSuites}</p>
+                `;
+
+                const testSuitesDiv = document.getElementById('testSuites');
+                testSuitesDiv.innerHTML = '';
+
+                results.testResults.forEach(testResult => {
+                    const testSuiteDiv = document.createElement('div');
+                    testSuiteDiv.classList.add('test-suite');
+
+                    const testTitle = document.createElement('h2');
+                    testTitle.textContent = testResult.name;
+                    testSuiteDiv.appendChild(testTitle);
+
+                    const testList = document.createElement('ul');
+                    testResult.assertionResults.forEach(assertion => {
+                        const listItem = document.createElement('li');
+                        listItem.innerHTML = `
+                            <span class="test-title">${assertion.title}</span>
+                            <span class="test-status ${assertion.status}"> - ${assertion.status}</span>
+                            <span class="test-duration">(${assertion.duration} мс)</span>
+                        `;
+                        testList.appendChild(listItem);
+                    });
+
+                    testSuiteDiv.appendChild(testList);
+                    testSuitesDiv.appendChild(testSuiteDiv);
+                });
+            }
+
+            fetch('test-results.json')
+                .then(response => response.json())
+                .then(updateTestResults);
+        </script>
+    </body>
+    <footer>
+        <section>
+            CC BY-NC-SA 4.0 2024-PRESENT © min2109
+        </section>
+    </footer>
+</html>

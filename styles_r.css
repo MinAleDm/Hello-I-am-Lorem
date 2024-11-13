@@ -1,0 +1,113 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f8ff;
+    color: #007bff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Изменяем, чтобы содержимое не центрировалось */
+    min-height: 100vh;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #e0f7fa; /* Цвет фона заголовка */
+    width: 100%;
+}
+
+header h1 {
+    font-size: 2.5em;
+    color: #007bff;
+    margin-right: auto; /* Отодвигаем навигацию вправо */
+}
+
+header h1 a {
+    color: inherit;
+    text-decoration: none;
+}
+
+nav {
+    margin-left: 20px; /* Отступ для навигации */
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav ul li {
+    margin: 0 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #007bff; /* Цвет ссылок */
+    padding: 5px 10px; /* Паддинг для улучшения кликабельности */
+    border-radius: 5px; /* Скругление углов */
+    transition: background-color 0.3s; /* Плавный переход цвета фона */
+}
+
+nav ul li a:hover {
+    background-color: #b2ebf2; /* Цвет фона при наведении */
+}
+
+.container {
+    max-width: 800px; /* Максимальная ширина контейнера */
+    padding: 20px;
+    background: white; /* Цвет фона контейнера */
+    border-radius: 10px; /* Скругление углов */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Тень для контейнера */
+    margin: 20px; /* Отступы вокруг контейнера */
+}
+
+h1 {
+    margin-bottom: 20px; /* Отступ под заголовком */
+    text-align: center; /* Центрируем заголовок */
+}
+
+.summary {
+    background-color: #f1f8e9; /* Цвет фона для блока сводной информации */
+    border-left: 4px solid #8bc34a; /* Левый бордер для акцента */
+    padding: 20px;
+    margin-bottom: 20px; /* Отступ под сводной информацией */
+}
+
+.test-suite {
+    margin: 15px 0; /* Отступы между наборами тестов */
+    padding: 15px;
+    border: 1px solid #bbb; /* Граница для набора тестов */
+    border-radius: 8px; /* Скругление углов */
+}
+
+.test-title {
+    font-size: 1.5em; /* Размер заголовка набора тестов */
+    color: #3f51b5; /* Цвет заголовка набора тестов */
+}
+
+.test-status {
+    font-weight: bold; /* Жирный шрифт для статуса теста */
+}
+
+.test-status.failed {
+    color: #f44336; /* Красный цвет для неудачных тестов */
+}
+
+.test-status.passed {
+    color: #4caf50; /* Зеленый цвет для пройденных тестов */
+}
+
+footer {
+    margin-top: auto; /* Ставим футер внизу */
+    background-color: #e0f7fa; /* Цвет фона футера */
+    padding: 10px; /* Отступ для футера */
+    text-align: center; /* Центрируем текст футера */
+    width: 100%; /* Чтобы футер занимал всю ширину */
+}

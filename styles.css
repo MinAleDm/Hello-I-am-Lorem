@@ -1,0 +1,121 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f8ff;
+    color: #007bff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #e0f7fa; /* Цвет фона заголовка */
+    width: 100%;
+}
+
+header h1 {
+    font-size: 2.5em;
+    color: #007bff;
+    margin-right: auto; /* Отодвигаем навигацию вправо */
+}
+
+header h1 a {
+    color: inherit;
+    text-decoration: none;
+}
+
+nav {
+    margin-left: 20px; /* Отступ для навигации */
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav ul li {
+    margin: 0 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #007bff; /* Цвет ссылок */
+    padding: 5px 10px; /* Паддинг для улучшения кликабельности */
+    border-radius: 5px; /* Скругление углов */
+    transition: background-color 0.3s; /* Плавный переход цвета фона */
+}
+
+nav ul li a:hover {
+    background-color: #b2ebf2; /* Цвет фона при наведении */
+}
+
+main {
+    max-width: 800px;
+    padding: 20px;
+    background: white; /* Цвет фона контейнера */
+    border-radius: 10px; /* Скругление углов */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Тень для контейнера */
+    margin: 20px; /* Отступы вокруг контейнера */
+    text-align: center; /* Центрируем текст */
+}
+
+input[type="text"] {
+    padding: 10px;
+    margin: 20px 0; /* Отступ сверху и снизу */
+    border: 1px solid #ccc; /* Цвет границы */
+    border-radius: 5px; /* Скругление углов */
+    font-size: 16px; /* Размер шрифта */
+    width: 80%; /* Занимает 80% доступной ширины */
+}
+
+.button-container {
+    display: flex;
+    justify-content: center; /* Центрируем кнопки */
+    flex-wrap: wrap; /* Обеспечиваем перенос кнопок на новую строку */
+    gap: 10px; /* Промежутки между кнопками */
+}
+
+button {
+    background-color: #007bff; /* Основной цвет кнопок */
+    color: white; /* Цвет текста */
+    border: none; /* Убираем границу */
+    border-radius: 5px; /* Скругление углов */
+    padding: 10px 20px; /* Паддинг для кнопок */
+    cursor: pointer; /* Указываем, что это кнопка */
+    transition: background-color 0.3s; /* Плавный переход цвета фона */
+}
+
+button:hover {
+    background-color: #0056b3; /* Цвет кнопок при наведении */
+}
+
+.message {
+    margin-top: 20px; /* Отступ сверху */
+    color: #4caf50; /* Зеленый цвет для информации */
+}
+
+.error {
+    color: #f44336; /* Красный цвет для ошибок */
+}
+
+footer {
+    margin-top: auto; /* Прижимаем футер к низу */
+    padding: 20px; 
+    background-color: #e0f7fa; /* Цвет фона футера */
+    text-align: center; /* Центрируем текст */
+    width: 100%;
+}
+
+footer section {
+    color: #007bff; /* Цвет текста футера */
+}
