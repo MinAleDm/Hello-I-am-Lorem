@@ -55,4 +55,4 @@ http-server
 Этот проект лицензирован под лицензией <b>MIT</b>.
 
 ## Автор
-Разработано <p href="https://github.com/yachayka">yachayka</p>.
+Разработано <a href="https://github.com/yachayka">yachayka</a>.
