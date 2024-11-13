@@ -16,13 +16,13 @@
 1. Клонирование репозитория:
 
 ```
-git clone https://github.com/yachayka/Hi-.git
+git clone https://github.com/yachayka/Hello-I-am-Lorem.git
 ```
 
 2. Переход в директорию проекта:
 
 ```
-cd Hi-
+cd Hello-I-am-Lorem
 ```
 
 3. Запуск локального сервера (например, с помощью http-server):
@@ -55,4 +55,4 @@ http-server
 Этот проект лицензирован под лицензией <b>MIT</b>.
 
 ## Автор
-Разработано yachayka.
+Разработано <p href="https://github.com/yachayka">yachayka</p>.
