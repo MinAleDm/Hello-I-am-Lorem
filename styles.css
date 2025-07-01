@@ -5,28 +5,29 @@
 }
 
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f0f8ff;
-    color: #007bff;
+    font-family: 'Helvetica Neue', sans-serif;
+    background-color: #f8f9fa;
+    color: #343a40;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     min-height: 100vh;
+    line-height: 1.5;
 }
 
 header {
     display: flex;
     align-items: center;
-    padding: 20px 40px;
-    background-color: #e0f7fa; /* Цвет фона заголовка */
+    padding: 20px 30px;
+    background-color: #e9ecef;
     width: 100%;
 }
 
 header h1 {
     font-size: 2.5em;
     color: #007bff;
-    margin-right: auto; /* Отодвигаем навигацию вправо */
+    margin-right: auto;
 }
 
 header h1 a {
@@ -35,7 +36,7 @@ header h1 a {
 }
 
 nav {
-    margin-left: 20px; /* Отступ для навигации */
+    margin-left: 20px;
 }
 
 nav ul {
@@ -44,78 +45,86 @@ nav ul {
 }
 
 nav ul li {
-    margin: 0 20px;
+    margin: 0 15px;
 }
 
 nav ul li a {
     text-decoration: none;
-    color: #007bff; /* Цвет ссылок */
-    padding: 5px 10px; /* Паддинг для улучшения кликабельности */
-    border-radius: 5px; /* Скругление углов */
-    transition: background-color 0.3s; /* Плавный переход цвета фона */
+    color: #007bff;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 nav ul li a:hover {
-    background-color: #b2ebf2; /* Цвет фона при наведении */
+    background-color: #f1f1f1; 
+    color: #0056b3;
 }
 
 main {
-    max-width: 800px;
-    padding: 20px;
-    background: white; /* Цвет фона контейнера */
-    border-radius: 10px; /* Скругление углов */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Тень для контейнера */
-    margin: 20px; /* Отступы вокруг контейнера */
-    text-align: center; /* Центрируем текст */
+    max-width: 900px;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); 
+    margin: 20px;
+    text-align: center;
 }
 
 input[type="text"] {
-    padding: 10px;
-    margin: 20px 0; /* Отступ сверху и снизу */
-    border: 1px solid #ccc; /* Цвет границы */
-    border-radius: 5px; /* Скругление углов */
-    font-size: 16px; /* Размер шрифта */
-    width: 80%; /* Занимает 80% доступной ширины */
+    padding: 12px;
+    margin: 20px 0;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 18px;
+    width: 85%;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
 }
 
 .button-container {
     display: flex;
-    justify-content: center; /* Центрируем кнопки */
-    flex-wrap: wrap; /* Обеспечиваем перенос кнопок на новую строку */
-    gap: 10px; /* Промежутки между кнопками */
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
 button {
-    background-color: #007bff; /* Основной цвет кнопок */
-    color: white; /* Цвет текста */
-    border: none; /* Убираем границу */
-    border-radius: 5px; /* Скругление углов */
-    padding: 10px 20px; /* Паддинг для кнопок */
-    cursor: pointer; /* Указываем, что это кнопка */
-    transition: background-color 0.3s; /* Плавный переход цвета фона */
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 24px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 button:hover {
-    background-color: #0056b3; /* Цвет кнопок при наведении */
+    background-color: #0056b3;
+    transform: scale(1.05);
 }
 
 .message {
-    margin-top: 20px; /* Отступ сверху */
-    color: #4caf50; /* Зеленый цвет для информации */
+    margin-top: 20px;
+    color: #28a745;
 }
 
 .error {
-    color: #f44336; /* Красный цвет для ошибок */
+    color: #dc3545;
 }
 
 footer {
-    margin-top: auto; /* Прижимаем футер к низу */
+    margin-top: auto;
     padding: 20px; 
-    background-color: #e0f7fa; /* Цвет фона футера */
-    text-align: center; /* Центрируем текст */
+    background-color: #e9ecef;
+    text-align: center;
     width: 100%;
 }
 
 footer section {
-    color: #007bff; /* Цвет текста футера */
+    color: #007bff;
 }
