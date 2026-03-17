@@ -1,0 +1,17 @@
+{
+  "name": "Hello, I am Lorem",
+  "short_name": "Lorem",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#12131a",
+  "theme_color": "#12131a",
+  "description": "Atmospheric static app with name profiling, local history and quality dashboard.",
+  "icons": [
+    {
+      "src": "./assets/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

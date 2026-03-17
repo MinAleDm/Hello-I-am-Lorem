@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Панель качества Hello, I am Lorem: визуализация результатов тестов и готовности проекта к публикации.">
+    <title>Hello, I am Lorem - Quality Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/icons/icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles/quality.css">
+</head>
+<body>
+    <div class="shell">
+        <header class="topbar">
+            <a class="brand" href="index.html">
+                <span class="brand-mark">L</span>
+                <span class="brand-copy">
+                    <strong>Hello, I am Lorem</strong>
+                    <small>quality lab</small>
+                </span>
+            </a>
+
+            <nav class="nav">
+                <a href="index.html">Студия</a>
+                <a class="is-active" href="results.html">Качество</a>
+            </nav>
+        </header>
+
+        <main class="quality-layout">
+            <section class="hero-card">
+                <p class="eyebrow">Техническая уверенность</p>
+                <h1>Панель качества и готовности к GitHub.</h1>
+                <p class="lead">
+                    Эта страница показывает состояние тестового набора. Если отчёта ещё нет, интерфейс честно
+                    скажет об этом и подскажет следующий шаг.
+                </p>
+            </section>
+
+            <section class="summary-grid" id="summaryGrid">
+                <article class="summary-card">
+                    <span class="summary-label">Всего тестов</span>
+                    <strong id="totalTests">-</strong>
+                </article>
+                <article class="summary-card">
+                    <span class="summary-label">Пройдено</span>
+                    <strong id="passedTests">-</strong>
+                </article>
+                <article class="summary-card">
+                    <span class="summary-label">Ошибок</span>
+                    <strong id="failedTests">-</strong>
+                </article>
+                <article class="summary-card">
+                    <span class="summary-label">Наборов</span>
+                    <strong id="totalSuites">-</strong>
+                </article>
+            </section>
+
+            <section class="report-card">
+                <div class="report-head">
+                    <div>
+                        <p class="eyebrow">Детали</p>
+                        <h2>Результаты тестов</h2>
+                    </div>
+                    <span id="passRate" class="status-badge">Ожидание отчёта</span>
+                </div>
+
+                <div id="statusMessage" class="status-message">
+                    Ищу `test-results.json`. Если файл пуст или отсутствует, здесь появится инструкция.
+                </div>
+
+                <div id="testSuites" class="suite-list"></div>
+            </section>
+        </main>
+    </div>
+
+    <script defer src="scripts/quality.js"></script>
+</body>
+</html>

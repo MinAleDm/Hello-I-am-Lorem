@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hello, I am Lorem: атмосферная студия приветствий с анализом имени, историей сессий и локальной аналитикой.">
+    <meta name="theme-color" content="#12131a">
+    <title>Hello, I am Lorem</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" href="assets/icons/icon.svg" type="image/svg+xml">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <div class="page-glow page-glow-left" aria-hidden="true"></div>
+    <div class="page-glow page-glow-right" aria-hidden="true"></div>
+
+    <div class="site-shell">
+        <header class="site-header">
+            <a class="brand" href="index.html" aria-label="Hello, I am Lorem">
+                <span class="brand-mark">L</span>
+                <span class="brand-copy">
+                    <strong>Hello, I am Lorem</strong>
+                    <small>name experience studio</small>
+                </span>
+            </a>
+
+            <nav class="site-nav" aria-label="Основная навигация">
+                <a class="is-active" href="index.html">Студия</a>
+                <a href="results.html">Качество</a>
+                <a href="#history">История</a>
+            </nav>
+        </header>
+
+        <main>
+            <section class="hero-layout">
+                <div class="hero-copy">
+                    <p class="eyebrow">Статическое приложение, которое ощущается как продукт</p>
+                    <h1>Старый “привет по имени” теперь стал цифровой студией впечатлений.</h1>
+                    <p class="hero-description">
+                        Лорем собирает настроение, анализирует имя, предлагает тон взаимодействия и
+                        сохраняет лучшие сессии локально. Всё работает без бэкенда, зато выглядит и
+                        ощущается как зрелый pet-project.
+                    </p>
+
+                    <div class="hero-metrics">
+                        <article class="metric-card">
+                            <span id="statsSessions" class="metric-value">0</span>
+                            <span class="metric-label">сессий сохранено</span>
+                        </article>
+                        <article class="metric-card">
+                            <span id="statsUniqueNames" class="metric-value">0</span>
+                            <span class="metric-label">уникальных имён</span>
+                        </article>
+                        <article class="metric-card">
+                            <span id="statsFavoriteMood" class="metric-value">-</span>
+                            <span class="metric-label">любимый режим</span>
+                        </article>
+                    </div>
+                </div>
+
+                <section class="studio-panel" aria-labelledby="studioTitle">
+                    <div class="panel-head">
+                        <p class="eyebrow">Интерактивная сессия</p>
+                        <h2 id="studioTitle">Собери профиль имени</h2>
+                        <p>
+                            Выбери настроение, введи имя и получи не просто приветствие, а маленький
+                            персональный сюжет.
+                        </p>
+                    </div>
+
+                    <form id="nameForm" class="studio-form" novalidate>
+                        <label class="field">
+                            <span>Как тебя зовут?</span>
+                            <input
+                                type="text"
+                                id="nameInput"
+                                name="name"
+                                placeholder="Например, Александр"
+                                autocomplete="name"
+                                maxlength="40"
+                            >
+                        </label>
+
+                        <label class="field">
+                            <span>Какой режим выбрать?</span>
+                            <select id="modeSelect" name="mode">
+                                <option value="focus">Фокус</option>
+                                <option value="creative">Креатив</option>
+                                <option value="calm">Спокойствие</option>
+                                <option value="bold">Смелость</option>
+                            </select>
+                        </label>
+
+                        <div class="button-grid">
+                            <button id="greetButton" type="submit">Создать профиль</button>
+                            <button id="randomGreetingButton" type="button" class="button-secondary">Случайный импульс</button>
+                            <button id="reverseNameButton" type="button" class="button-ghost">Отразить имя</button>
+                            <button id="resetButton" type="button" class="button-ghost">Очистить сцену</button>
+                        </div>
+
+                        <p id="errorMessage" class="error" aria-live="polite"></p>
+                    </form>
+                </section>
+            </section>
+
+            <section class="result-layout" aria-label="Результаты текущей сессии">
+                <article class="story-card story-main">
+                    <p class="eyebrow">Текущий сигнал</p>
+                    <h2 id="greetingTitle">Здесь появится история после первой сессии.</h2>
+                    <p id="greetingMessage" class="message">
+                        Лорем умеет не только поздороваться, но и превратить имя в маленький цифровой портрет.
+                    </p>
+                    <div id="messagePill" class="message-pill">Ожидание</div>
+                </article>
+
+                <article class="story-card story-side">
+                    <p class="eyebrow">Портрет имени</p>
+                    <ul id="profileInsights" class="insight-list">
+                        <li>Длина, первая буква и зеркальная версия имени появятся здесь.</li>
+                        <li>Режим взаимодействия добавит тон и настроение.</li>
+                        <li>Каждая успешная сессия попадёт в локальную историю.</li>
+                    </ul>
+                </article>
+            </section>
+
+            <section class="history-section" id="history">
+                <div class="section-head">
+                    <div>
+                        <p class="eyebrow">Локальная память</p>
+                        <h2>История последних сессий</h2>
+                    </div>
+
+                    <button id="clearHistoryButton" type="button" class="button-ghost button-small">
+                        Очистить историю
+                    </button>
+                </div>
+
+                <div id="historyList" class="history-list" aria-live="polite"></div>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <p>MIT licensed showcase project. Designed for GitHub Pages, offline caching and a better first impression.</p>
+        </footer>
+    </div>
+
+    <script defer src="scripts/app.js"></script>
+</body>
+</html>

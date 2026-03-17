@@ -1,10 +1,11 @@
 {
-  "name": "4pr_local",
-  "version": "1.0.0",
-  "main": "index.js",
-  "type": "module",
+  "name": "hello-i-am-lorem",
+  "version": "2.0.0",
+  "description": "Atmospheric static showcase app with name profiling, local history and GitHub Pages deployment.",
+  "main": "src/scripts/app.js",
   "scripts": {
-    "test": "jest --json > test-results.json"
+    "test": "node ./node_modules/jest/bin/jest.js",
+    "test:report": "node ./node_modules/jest/bin/jest.js --json --outputFile=src/test-results.json"
   },
   "devDependencies": {
     "jest": "^29.7.0",
@@ -15,4 +16,3 @@
     "testEnvironment": "jest-environment-jsdom"
   }
 }
-
