@@ -1,11 +1,11 @@
 {
-  "name": "Hello, I am Lorem",
-  "short_name": "Lorem",
+  "name": "Thinking UI Studio",
+  "short_name": "Thinking UI",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#12131a",
-  "theme_color": "#12131a",
-  "description": "Atmospheric static app with name profiling, local history and quality dashboard.",
+  "background_color": "#0c111b",
+  "theme_color": "#0c111b",
+  "description": "Static adaptive interface case study with explainable UI changes, local-first memory and a quality dashboard.",
   "icons": [
     {
       "src": "./assets/icons/icon.svg",

@@ -1,522 +1,416 @@
-(function (global) {
-    const STORAGE_KEY = "hello-i-am-lorem-history-v2";
-    const DEFAULT_MODE = "focus";
-    const MAX_HISTORY_ITEMS = 6;
-    const VOWELS = "аеёиоуыэюяaeiouy";
-
-    const modeConfig = {
-        focus: {
-            label: "Фокус",
-            aura: "Точный ритм",
-            greetingStyle: "собранный",
-            prompts: [
-                "сегодня звучит как человек, который доводит идеи до результата.",
-                "собирает хаос в ясную последовательность шагов.",
-                "умеет превращать хорошее намерение в понятный план."
-            ]
-        },
-        creative: {
-            label: "Креатив",
-            aura: "Искра воображения",
-            greetingStyle: "изобретательный",
-            prompts: [
-                "похоже на имя, которое умеет находить неожиданные ракурсы.",
-                "включает режим, где идеи приходят быстрее сомнений.",
-                "звучит так, будто рядом уже рождается новая история."
-            ]
-        },
-        calm: {
-            label: "Спокойствие",
-            aura: "Тихая опора",
-            greetingStyle: "мягкий",
-            prompts: [
-                "сегодня приносит в пространство устойчивость и воздух.",
-                "звучит как имя, рядом с которым решения принимаются чище.",
-                "напоминает, что сила бывает очень спокойной."
-            ]
-        },
-        bold: {
-            label: "Смелость",
-            aura: "Энергия движения",
-            greetingStyle: "дерзкий",
-            prompts: [
-                "входит в комнату как сигнал, что пора действовать.",
-                "несёт в себе ощущение старта и внутреннего импульса.",
-                "звучит так, будто осторожность уже уступила место инициативе."
-            ]
-        }
+(function (root, factory) {
+    if (typeof module !== "undefined" && module.exports) {
+        module.exports = factory(
+            require("./core/content.js"),
+            require("./core/profile.js"),
+            require("./core/storage.js"),
+            require("./core/state.js"),
+            require("./core/behavior-tracker.js"),
+            require("./core/adaptation-engine.js"),
+            require("./renderers/app-renderer.js"),
+            require("./utils/animation.js")
+        );
+    } else {
+        root.ThinkingUIStudioApp = factory(
+            root.ThinkingUIStudioContent,
+            root.ThinkingUIStudioProfile,
+            root.ThinkingUIStudioStorage,
+            root.ThinkingUIStudioState,
+            root.ThinkingUIStudioBehaviorTracker,
+            root.ThinkingUIStudioAdaptationEngine,
+            root.ThinkingUIStudioRenderer,
+            root.ThinkingUIStudioAnimation
+        );
+    }
+})(typeof window !== "undefined" ? window : globalThis, function (
+    content,
+    profileModel,
+    storage,
+    stateModel,
+    tracker,
+    engine,
+    renderer,
+    animation
+) {
+    let state = null;
+    let elements = null;
+    let scrollFrameRequested = false;
+    let detachSpotlight = function () {
+        return null;
     };
 
-    const archetypes = [
-        "Архитектор идей",
-        "Хранитель темпа",
-        "Проводник изменений",
-        "Коллекционер смыслов",
-        "Навигатор внимания",
-        "Собиратель импульсов"
-    ];
-
-    const compliments = [
-        "У твоего имени отличная энергия для сильного первого впечатления.",
-        "Это имя хорошо держит ритм и легко запоминается.",
-        "В нём есть мягкость, которую поддерживает внутренняя уверенность.",
-        "Такое имя звучит как личный бренд, у которого уже есть характер.",
-        "Оно оставляет ощущение ясности и аккуратной силы."
-    ];
-
-    const recommendations = [
-        "Сделай один шаг, который даст результат уже сегодня.",
-        "Выбери задачу, которую давно хотелось закрыть красиво.",
-        "Оставь место для эксперимента, но не теряй структуру.",
-        "Собери внимание вокруг главного и убери шум.",
-        "Скажи своей идее не только «интересно», но и «поехали»."
-    ];
-
-    const randomGreetings = [
-        "Привет! Сегодня отличный день, чтобы обновить собственную историю.",
-        "Салют! У хороших проектов всегда есть характер, и у тебя тоже.",
-        "Добро пожаловать в студию имени: здесь даже простое приветствие звучит богаче.",
-        "Привет! Иногда одно имя уже задаёт настроение всему дню.",
-        "На сцене новый сигнал: пора собрать фокус, смелость или креатив."
-    ];
-
-    let dom = {};
-    let isBound = false;
-
-    function normalizeName(value) {
-        return String(value || "").replace(/\s+/g, " ").trim();
-    }
-
-    function hasLetters(value) {
-        return /[A-Za-zА-Яа-яЁё]/.test(value);
-    }
-
-    function isValidName(value) {
-        const normalized = normalizeName(value);
-        return normalized.length > 0 && hasLetters(normalized);
-    }
-
-    function reverseText(value) {
-        return normalizeName(value).split("").reverse().join("");
-    }
-
-    function getMode(mode) {
-        return modeConfig[mode] || modeConfig[DEFAULT_MODE];
-    }
-
-    function hashString(value) {
-        let hash = 0;
-        for (let index = 0; index < value.length; index += 1) {
-            hash = (hash * 31 + value.charCodeAt(index)) >>> 0;
+    function pushUnique(list, value) {
+        if (list.indexOf(value) < 0) {
+            list.push(value);
         }
-        return hash;
+        return list;
     }
 
-    function pickByHash(items, hash, offset) {
-        if (!items.length) {
-            return "";
+    function persistPreferences() {
+        storage.savePreferences(stateModel.syncPreferencesFromState(state));
+    }
+
+    function sync(shouldEvaluateAdaptation) {
+        if (shouldEvaluateAdaptation) {
+            engine.evaluateAutomaticAdaptation(state);
+        } else {
+            state.ui.currentPattern = engine.detectBehaviorPattern(state.behavior);
         }
-        return items[(hash + offset) % items.length];
+
+        state.suggestions = engine.evaluateAdaptiveSuggestions(state);
+        elements = renderer.renderApp(document, state, elements);
+        persistPreferences();
     }
 
-    function getNameMetrics(name) {
-        const normalized = normalizeName(name);
-        const letters = normalized.replace(/[^A-Za-zА-Яа-яЁё]/g, "");
-        const characters = Array.from(letters);
-        const vowels = characters.filter((letter) => VOWELS.includes(letter.toLowerCase())).length;
-        const consonants = characters.length - vowels;
-
+    function createHistoryEntry(sessionProfile) {
         return {
-            length: characters.length,
-            vowels,
-            consonants,
-            firstLetter: characters[0] ? characters[0].toUpperCase() : "-"
+            id: sessionProfile.id,
+            name: sessionProfile.name,
+            prompt: sessionProfile.prompt,
+            mode: sessionProfile.mode,
+            intent: sessionProfile.intent,
+            headline: sessionProfile.headline,
+            summary: sessionProfile.signalSummary,
+            createdAt: sessionProfile.createdAt
         };
     }
 
-    function buildNameProfile(name, mode, now) {
-        const normalizedName = normalizeName(name);
-        if (!isValidName(normalizedName)) {
+    function resetBehaviorLayer() {
+        state.behavior = tracker.createBehaviorState(content.SECTION_KEYS);
+        state.reasoningLog = [];
+        state.ui.currentPattern = content.PATTERN_COPY.exploration;
+        state.ui.expandedSections = Object.assign({}, content.DEFAULT_EXPANDED_SECTIONS);
+        state.ui.primaryCta = "start";
+        state.ui.emphasisSection = "signal";
+    }
+
+    function readComposerValues() {
+        return {
+            name: document.getElementById("nameInput").value,
+            prompt: document.getElementById("promptInput").value,
+            mode: state.session.activeMode,
+            intent: state.session.activeIntent
+        };
+    }
+
+    function writeComposerValues(payload) {
+        document.getElementById("nameInput").value = payload.name || "";
+        document.getElementById("promptInput").value = payload.prompt || "";
+    }
+
+    function startSession(payload) {
+        const sessionInput = payload || readComposerValues();
+        const sessionProfile = profileModel.buildSessionProfile(sessionInput, new Date());
+
+        if (!sessionProfile) {
+            state.session.statusText = "A readable name is required before the interface can adapt.";
+            sync(false);
             return null;
         }
 
-        const safeMode = mode || DEFAULT_MODE;
-        const activeMode = getMode(safeMode);
-        const date = now instanceof Date ? now : new Date();
-        const seed = hashString(`${normalizedName}:${safeMode}`);
-        const metrics = getNameMetrics(normalizedName);
-        const reversedName = reverseText(normalizedName);
-        const archetype = pickByHash(archetypes, seed, 0);
-        const compliment = pickByHash(compliments, seed, 1);
-        const recommendation = pickByHash(recommendations, seed, 2);
-        const statement = pickByHash(activeMode.prompts, seed, 3);
-        const hour = date.getHours();
-        const timeGreeting = hour < 12 ? "Доброе утро" : hour < 18 ? "Добрый день" : "Добрый вечер";
-        const greeting = `${timeGreeting}, ${normalizedName}. Твой режим сегодня: ${activeMode.label.toLowerCase()}.`;
+        resetBehaviorLayer();
+        state.session.profile = sessionProfile;
+        state.session.activeMode = sessionInput.mode;
+        state.session.activeIntent = sessionInput.intent;
+        state.session.nameDraft = sessionInput.name;
+        state.session.promptDraft = sessionInput.prompt;
+        state.session.statusText = sessionProfile.headline + " is active.";
 
-        return {
-            normalizedName,
-            mode: safeMode,
-            modeLabel: activeMode.label,
-            aura: activeMode.aura,
-            archetype,
-            compliment,
-            recommendation,
-            reversedName,
-            metrics,
-            greeting,
-            headline: `${normalizedName} — ${archetype}`,
-            narrative: `${normalizedName} ${statement}`,
-            createdAt: date.toISOString()
-        };
+        state.history = storage.appendHistory(createHistoryEntry(sessionProfile));
+        sync(false);
+        return sessionProfile;
     }
 
-    function createHistoryEntry(profile) {
-        return {
-            id: `${profile.normalizedName}-${profile.mode}-${profile.createdAt}`,
-            name: profile.normalizedName,
-            mode: profile.mode,
-            modeLabel: profile.modeLabel,
-            aura: profile.aura,
-            archetype: profile.archetype,
-            greeting: profile.greeting,
-            createdAt: profile.createdAt
-        };
-    }
-
-    function canUseStorage() {
-        return typeof global.localStorage !== "undefined";
-    }
-
-    function loadHistory() {
-        if (!canUseStorage()) {
-            return [];
-        }
-
-        try {
-            const raw = global.localStorage.getItem(STORAGE_KEY);
-            const parsed = raw ? JSON.parse(raw) : [];
-            return Array.isArray(parsed) ? parsed : [];
-        } catch (error) {
-            return [];
-        }
-    }
-
-    function saveHistory(history) {
-        if (!canUseStorage()) {
-            return history;
-        }
-
-        global.localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
-        return history;
-    }
-
-    function clearStoredHistory() {
-        return saveHistory([]);
-    }
-
-    function pushHistory(entry) {
-        const nextHistory = [entry]
-            .concat(loadHistory().filter((item) => item.id !== entry.id))
-            .slice(0, MAX_HISTORY_ITEMS);
-
-        return saveHistory(nextHistory);
-    }
-
-    function computeDashboard(history) {
-        const items = Array.isArray(history) ? history : [];
-
-        if (!items.length) {
-            return {
-                totalSessions: 0,
-                uniqueNames: 0,
-                favoriteMood: "Пока нет"
-            };
-        }
-
-        const uniqueNames = new Set(items.map((item) => item.name.toLowerCase())).size;
-        const counters = items.reduce((accumulator, item) => {
-            accumulator[item.modeLabel] = (accumulator[item.modeLabel] || 0) + 1;
-            return accumulator;
-        }, {});
-
-        const favoriteMood = Object.entries(counters)
-            .sort((left, right) => right[1] - left[1])[0][0];
-
-        return {
-            totalSessions: items.length,
-            uniqueNames,
-            favoriteMood
-        };
-    }
-
-    function formatDate(isoString) {
-        const value = new Date(isoString);
-        if (Number.isNaN(value.getTime())) {
-            return "в неизвестное время";
-        }
-
-        return new Intl.DateTimeFormat("ru-RU", {
-            day: "2-digit",
-            month: "short",
-            hour: "2-digit",
-            minute: "2-digit"
-        }).format(value);
-    }
-
-    function setText(element, value) {
-        if (element) {
-            element.textContent = value;
-        }
-    }
-
-    function ensureDom() {
-        if (typeof document === "undefined") {
-            return;
-        }
-
-        if (!dom.greetingMessage || !dom.greetingMessage.isConnected) {
-            cacheDom();
-        }
-    }
-
-    function setMessage(text, state) {
-        if (dom.greetingMessage) {
-            dom.greetingMessage.textContent = text;
-            dom.greetingMessage.dataset.state = state || "default";
-        }
-    }
-
-    function renderInsights(lines) {
-        if (!dom.profileInsights) {
-            return;
-        }
-
-        dom.profileInsights.innerHTML = "";
-        lines.forEach((line) => {
-            const item = document.createElement("li");
-            item.textContent = line;
-            dom.profileInsights.appendChild(item);
+    function loadSampleSession() {
+        const sample = content.SAMPLE_SESSIONS[state.session.activeMode] || content.SAMPLE_SESSIONS.focus;
+        writeComposerValues(sample);
+        state.session.activeIntent = sample.intent;
+        sync(false);
+        return startSession({
+            name: sample.name,
+            prompt: sample.prompt,
+            mode: state.session.activeMode,
+            intent: sample.intent
         });
     }
 
-    function renderDashboard(history) {
-        const stats = computeDashboard(history);
-        setText(dom.statsSessions, String(stats.totalSessions));
-        setText(dom.statsUniqueNames, String(stats.uniqueNames));
-        setText(dom.statsFavoriteMood, stats.favoriteMood);
+    function clearSession() {
+        writeComposerValues({ name: "", prompt: "" });
+        resetBehaviorLayer();
+        state.session.profile = null;
+        state.session.statusText = "Start a session to let the workspace adapt around your behavior.";
+        sync(false);
     }
 
-    function renderHistory(history) {
-        if (!dom.historyList) {
+    function handleModeSelection(modeId) {
+        if (content.MODE_SEQUENCE.indexOf(modeId) < 0) {
             return;
         }
 
-        dom.historyList.innerHTML = "";
+        if (state.session.activeMode !== modeId) {
+            state.session.activeMode = modeId;
+            tracker.registerModeSwitch(state.behavior);
+        }
 
-        if (!history.length) {
-            const empty = document.createElement("div");
-            empty.className = "history-empty";
-            empty.textContent = "Пока пусто. Проведи первую сессию, и Лорем начнёт собирать локальную историю.";
-            dom.historyList.appendChild(empty);
+        sync(true);
+    }
+
+    function handleIntentSelection(intentId) {
+        if (!content.getIntent(intentId)) {
             return;
         }
 
-        history.forEach((entry) => {
-            const wrapper = document.createElement("article");
-            wrapper.className = "history-entry";
+        state.session.activeIntent = intentId;
+        sync(false);
+    }
 
-            const top = document.createElement("div");
-            top.className = "history-entry-top";
+    function toggleSection(sectionId) {
+        const nextValue = !(state.ui.expandedSections[sectionId] !== false);
+        state.ui.expandedSections[sectionId] = nextValue;
+        if (nextValue) {
+            tracker.registerSectionOpen(state.behavior, sectionId);
+        }
+        sync(true);
+    }
 
-            const title = document.createElement("strong");
-            title.textContent = `${entry.name} — ${entry.archetype}`;
+    function togglePinnedSection(sectionId) {
+        const index = state.ui.pinnedSections.indexOf(sectionId);
+        if (index >= 0) {
+            state.ui.pinnedSections.splice(index, 1);
+        } else {
+            state.ui.pinnedSections.push(sectionId);
+            state.ui.ordering = state.ui.ordering.filter(function (item) {
+                return item !== sectionId;
+            });
+            state.ui.ordering.unshift(sectionId);
+        }
+        sync(false);
+    }
 
-            const badge = document.createElement("span");
-            badge.className = "message-pill";
-            badge.textContent = entry.modeLabel;
+    function setDensity(density) {
+        state.ui.density = density;
+        sync(false);
+    }
 
-            top.appendChild(title);
-            top.appendChild(badge);
+    function handleSuggestionAction(action, suggestionId, ruleId) {
+        if (action === "dismiss") {
+            pushUnique(state.preferences.dismissedSuggestionIds, suggestionId);
+            tracker.registerSuggestionResponse(state.behavior, suggestionId, "dismissed");
+            sync(false);
+            return;
+        }
 
-            const meta = document.createElement("p");
-            meta.className = "history-meta";
-            meta.textContent = `${entry.greeting} Сохранено ${formatDate(entry.createdAt)}.`;
+        if (action === "accept") {
+            pushUnique(state.preferences.acceptedSuggestionIds, suggestionId);
+            tracker.registerSuggestionResponse(state.behavior, suggestionId, "accepted");
+            engine.applyRule(state, ruleId, {
+                source: "manual",
+                force: true,
+                timestamp: new Date().toISOString()
+            });
+            sync(false);
+        }
+    }
 
-            const action = document.createElement("button");
-            action.type = "button";
-            action.className = "button-ghost button-small history-action";
-            action.dataset.historyId = entry.id;
-            action.textContent = "Повторить сценарий";
+    function handleReasoningAction(action, eventId) {
+        if (action === "undo") {
+            engine.undoAdaptation(state, eventId);
+        }
 
-            wrapper.appendChild(top);
-            wrapper.appendChild(meta);
-            wrapper.appendChild(action);
-            dom.historyList.appendChild(wrapper);
+        if (action === "keep") {
+            engine.keepAdaptation(state, eventId);
+        }
+
+        if (action === "disable") {
+            engine.disableSimilar(state, eventId);
+        }
+
+        sync(false);
+    }
+
+    function handleHistoryLoad(historyId) {
+        const entry = state.history.find(function (item) {
+            return item.id === historyId;
         });
-    }
 
-    function renderEmptyState() {
-        setText(dom.greetingTitle, "Здесь появится история после первой сессии.");
-        setMessage(
-            "Лорем умеет не только поздороваться, но и превратить имя в маленький цифровой портрет.",
-            "default"
-        );
-        setText(dom.messagePill, "Ожидание");
-
-        renderInsights([
-            "Длина, первая буква и зеркальная версия имени появятся здесь.",
-            "Режим взаимодействия добавит тон и настроение.",
-            "Каждая успешная сессия попадёт в локальную историю."
-        ]);
-    }
-
-    function renderProfile(profile) {
-        setText(dom.greetingTitle, profile.headline);
-        setMessage(`${profile.greeting} ${profile.narrative}`, "success");
-        setText(dom.messagePill, `${profile.modeLabel} · ${profile.aura}`);
-
-        renderInsights([
-            `Первая буква: ${profile.metrics.firstLetter}. Символов в имени: ${profile.metrics.length}.`,
-            `Гласных: ${profile.metrics.vowels}, согласных: ${profile.metrics.consonants}. Зеркальная версия: ${profile.reversedName}.`,
-            `${profile.compliment} ${profile.recommendation}`
-        ]);
-    }
-
-    function showError(message) {
-        setText(dom.errorMessage, message || "");
-    }
-
-    function runProfileFlow(name, mode) {
-        if (!isValidName(name)) {
-            showError("Введите имя, в котором есть хотя бы одна буква.");
-            setText(dom.greetingTitle, "Нужен сигнал для старта.");
-            setMessage("Пустой ввод не даёт Лорему материал для персонального сценария.", "default");
-            setText(dom.messagePill, "Ожидание");
-            return null;
-        }
-
-        showError("");
-        const profile = buildNameProfile(name, mode, new Date());
-        renderProfile(profile);
-        const nextHistory = pushHistory(createHistoryEntry(profile));
-        renderHistory(nextHistory);
-        renderDashboard(nextHistory);
-        return profile;
-    }
-
-    function greetUser() {
-        ensureDom();
-        const name = dom.nameInput ? dom.nameInput.value : "";
-        const mode = dom.modeSelect ? dom.modeSelect.value : DEFAULT_MODE;
-        return runProfileFlow(name, mode);
-    }
-
-    function reverseName() {
-        ensureDom();
-        const name = dom.nameInput ? dom.nameInput.value : "";
-        if (!isValidName(name)) {
-            showError("Чтобы отразить имя, сначала введи его.");
-            setMessage("", "default");
-            return "";
-        }
-
-        showError("");
-        const normalized = normalizeName(name);
-        const reversed = reverseText(normalized);
-        const mode = dom.modeSelect ? dom.modeSelect.value : DEFAULT_MODE;
-        const activeMode = getMode(mode);
-
-        setText(dom.greetingTitle, `${normalized}, твоя зеркальная версия готова.`);
-        setMessage(`Имя в зеркале: ${reversed}. Иногда новый ракурс начинается с одной строки.`, "mirror");
-        setText(dom.messagePill, `${activeMode.label} · Режим отражения`);
-
-        renderInsights([
-            `Исходное имя: ${normalized}. Отражённая форма: ${reversed}.`,
-            `Тон выбранного режима: ${activeMode.greetingStyle}. Аура: ${activeMode.aura}.`,
-            "Используй отражение как короткий визуальный приём для hero-блоков, карточек или никнейма."
-        ]);
-
-        return reversed;
-    }
-
-    function getRandomGreeting() {
-        const index = Math.floor(Math.random() * randomGreetings.length);
-        return randomGreetings[index];
-    }
-
-    function generateRandomGreeting() {
-        ensureDom();
-        showError("");
-        const mode = dom.modeSelect ? dom.modeSelect.value : DEFAULT_MODE;
-        const activeMode = getMode(mode);
-        const greeting = getRandomGreeting();
-
-        setText(dom.greetingTitle, "Случайный импульс от Лорема");
-        setMessage(`${greeting} Активный режим: ${activeMode.label.toLowerCase()}.`, "random");
-        setText(dom.messagePill, `${activeMode.label} · Быстрый сигнал`);
-
-        renderInsights([
-            `Режим ${activeMode.label.toLowerCase()} добавляет сценарию оттенок: ${activeMode.aura}.`,
-            "Случайный импульс хорошо подходит для первого экрана, демо или быстрой проверки UI.",
-            "Если захочешь глубже, вернись к полному профилю имени и Лорем соберёт более точный портрет."
-        ]);
-
-        return greeting;
-    }
-
-    function reset() {
-        ensureDom();
-        if (dom.nameForm) {
-            dom.nameForm.reset();
-        } else if (dom.nameInput) {
-            dom.nameInput.value = "";
-        }
-
-        showError("");
-        renderEmptyState();
-
-        const history = loadHistory();
-        renderHistory(history);
-        renderDashboard(history);
-        return true;
-    }
-
-    function applyHistoryEntry(entryId) {
-        ensureDom();
-        const history = loadHistory();
-        const entry = history.find((item) => item.id === entryId);
         if (!entry) {
-            return null;
-        }
-
-        if (dom.nameInput) {
-            dom.nameInput.value = entry.name;
-        }
-        if (dom.modeSelect) {
-            dom.modeSelect.value = entry.mode;
-        }
-
-        const profile = buildNameProfile(entry.name, entry.mode, new Date(entry.createdAt));
-        if (profile) {
-            showError("");
-            renderProfile(profile);
-        }
-
-        return profile;
-    }
-
-    function handleHistoryClick(event) {
-        const target = event.target.closest("[data-history-id]");
-        if (!target) {
             return;
         }
 
-        applyHistoryEntry(target.dataset.historyId);
+        writeComposerValues(entry);
+        state.session.activeMode = entry.mode;
+        state.session.activeIntent = entry.intent;
+        startSession({
+            name: entry.name,
+            prompt: entry.prompt,
+            mode: entry.mode,
+            intent: entry.intent
+        });
+    }
+
+    function bindSectionAttention() {
+        elements.sections.forEach(function (section) {
+            const sectionId = section.getAttribute("data-section");
+
+            section.addEventListener("pointerenter", function () {
+                tracker.beginSectionAttention(state.behavior, sectionId);
+            });
+
+            section.addEventListener("pointerleave", function () {
+                tracker.endSectionAttention(state.behavior, sectionId);
+                sync(true);
+            });
+
+            section.addEventListener("focusin", function () {
+                tracker.beginSectionAttention(state.behavior, sectionId);
+            });
+
+            section.addEventListener("focusout", function () {
+                tracker.endSectionAttention(state.behavior, sectionId);
+                sync(true);
+            });
+        });
+    }
+
+    function bindEvents() {
+        document.getElementById("composerForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            startSession();
+        });
+
+        document.getElementById("sampleSessionButton").addEventListener("click", function () {
+            loadSampleSession();
+        });
+
+        document.getElementById("resetSessionButton").addEventListener("click", function () {
+            clearSession();
+        });
+
+        document.getElementById("clearHistoryButton").addEventListener("click", function () {
+            state.history = storage.clearHistory();
+            sync(false);
+        });
+
+        document.addEventListener("click", function (event) {
+            const section = event.target.closest("[data-section]");
+            if (section) {
+                tracker.registerSectionClick(state.behavior, section.getAttribute("data-section"));
+            }
+
+            const modeButton = event.target.closest("[data-mode-select]");
+            if (modeButton) {
+                handleModeSelection(modeButton.getAttribute("data-mode-select"));
+            }
+
+            const intentButton = event.target.closest("[data-intent-select]");
+            if (intentButton) {
+                handleIntentSelection(intentButton.getAttribute("data-intent-select"));
+            }
+
+            const toggleButton = event.target.closest("[data-toggle-section]");
+            if (toggleButton) {
+                toggleSection(toggleButton.getAttribute("data-toggle-section"));
+            }
+
+            const densityButton = event.target.closest("[data-density-select]");
+            if (densityButton) {
+                setDensity(densityButton.getAttribute("data-density-select"));
+            }
+
+            const pinButton = event.target.closest("[data-pin-target]");
+            if (pinButton) {
+                togglePinnedSection(pinButton.getAttribute("data-pin-target"));
+            }
+
+            const suggestionAction = event.target.closest("[data-suggestion-action]");
+            if (suggestionAction) {
+                handleSuggestionAction(
+                    suggestionAction.getAttribute("data-suggestion-action"),
+                    suggestionAction.getAttribute("data-suggestion-id"),
+                    suggestionAction.getAttribute("data-rule-id")
+                );
+            }
+
+            const reasoningAction = event.target.closest("[data-reasoning-action]");
+            if (reasoningAction) {
+                handleReasoningAction(
+                    reasoningAction.getAttribute("data-reasoning-action"),
+                    reasoningAction.getAttribute("data-event-id")
+                );
+            }
+
+            const historyAction = event.target.closest("[data-history-id]");
+            if (historyAction) {
+                handleHistoryLoad(historyAction.getAttribute("data-history-id"));
+            }
+        });
+
+        document.getElementById("adaptationToggle").addEventListener("change", function (event) {
+            state.ui.adaptationEnabled = event.target.checked;
+            sync(false);
+        });
+
+        document.getElementById("layoutLockToggle").addEventListener("change", function (event) {
+            state.ui.lockedLayout = event.target.checked;
+            sync(false);
+        });
+
+        document.getElementById("undoLastButton").addEventListener("click", function () {
+            const latestEvent = state.reasoningLog[0];
+            if (!latestEvent) {
+                return;
+            }
+
+            engine.undoAdaptation(state, latestEvent.id);
+            sync(false);
+        });
+
+        window.addEventListener("scroll", function () {
+            if (scrollFrameRequested) {
+                return;
+            }
+
+            scrollFrameRequested = true;
+            window.requestAnimationFrame(function () {
+                const doc = document.documentElement;
+                const maxScrollable = Math.max(doc.scrollHeight - window.innerHeight, 1);
+                tracker.registerScroll(state.behavior, {
+                    deltaY: window.scrollY - (window.__thinkingUiLastScrollY || 0),
+                    depth: Math.round((window.scrollY / maxScrollable) * 100)
+                });
+                window.__thinkingUiLastScrollY = window.scrollY;
+                sync(true);
+                scrollFrameRequested = false;
+            });
+        }, { passive: true });
+
+        window.addEventListener("beforeunload", function () {
+            tracker.flushAttention(state.behavior);
+            persistPreferences();
+        });
+
+        bindSectionAttention();
+    }
+
+    function initApp() {
+        if (typeof document === "undefined") {
+            return null;
+        }
+
+        state = stateModel.createInitialState({
+            history: storage.loadHistory(),
+            preferences: storage.loadPreferences()
+        });
+        elements = renderer.cacheElements(document);
+        detachSpotlight = animation.bindSpotlight(window);
+        sync(false);
+        bindEvents();
+        registerServiceWorker();
+        return state;
     }
 
     function registerServiceWorker() {
-        if (!("serviceWorker" in navigator)) {
+        if (typeof navigator === "undefined" || !("serviceWorker" in navigator)) {
             return;
         }
 
@@ -525,108 +419,20 @@
         });
     }
 
-    function bindEvents() {
-        if (isBound) {
-            return;
-        }
-
-        if (dom.nameForm) {
-            dom.nameForm.addEventListener("submit", function (event) {
-                event.preventDefault();
-                greetUser();
-            });
-        }
-
-        if (dom.randomGreetingButton) {
-            dom.randomGreetingButton.addEventListener("click", generateRandomGreeting);
-        }
-
-        if (dom.reverseNameButton) {
-            dom.reverseNameButton.addEventListener("click", reverseName);
-        }
-
-        if (dom.resetButton) {
-            dom.resetButton.addEventListener("click", reset);
-        }
-
-        if (dom.clearHistoryButton) {
-            dom.clearHistoryButton.addEventListener("click", function () {
-                clearStoredHistory();
-                renderHistory([]);
-                renderDashboard([]);
-            });
-        }
-
-        if (dom.historyList) {
-            dom.historyList.addEventListener("click", handleHistoryClick);
-        }
-
-        isBound = true;
-    }
-
-    function cacheDom() {
-        dom = {
-            nameForm: document.getElementById("nameForm"),
-            nameInput: document.getElementById("nameInput"),
-            modeSelect: document.getElementById("modeSelect"),
-            greetButton: document.getElementById("greetButton"),
-            randomGreetingButton: document.getElementById("randomGreetingButton"),
-            reverseNameButton: document.getElementById("reverseNameButton"),
-            resetButton: document.getElementById("resetButton"),
-            greetingTitle: document.getElementById("greetingTitle"),
-            greetingMessage: document.getElementById("greetingMessage"),
-            messagePill: document.getElementById("messagePill"),
-            errorMessage: document.getElementById("errorMessage"),
-            profileInsights: document.getElementById("profileInsights"),
-            historyList: document.getElementById("historyList"),
-            clearHistoryButton: document.getElementById("clearHistoryButton"),
-            statsSessions: document.getElementById("statsSessions"),
-            statsUniqueNames: document.getElementById("statsUniqueNames"),
-            statsFavoriteMood: document.getElementById("statsFavoriteMood")
-        };
-    }
-
-    function initApp() {
-        if (typeof document === "undefined") {
-            return;
-        }
-
-        cacheDom();
-
-        if (!dom.greetingMessage) {
-            return;
-        }
-
-        renderEmptyState();
-        const history = loadHistory();
-        renderHistory(history);
-        renderDashboard(history);
-        bindEvents();
-        registerServiceWorker();
-    }
-
     const api = {
-        normalizeName,
-        reverseText,
-        getNameMetrics,
-        buildNameProfile,
-        computeDashboard,
-        loadHistory,
-        saveHistory,
-        clearStoredHistory,
-        getRandomGreeting,
-        greetUser,
-        reset,
-        reverseName,
-        generateRandomGreeting,
-        initApp
+        initApp: initApp,
+        startSession: startSession,
+        loadSampleSession: loadSampleSession,
+        clearSession: clearSession,
+        handleSuggestionAction: handleSuggestionAction,
+        handleReasoningAction: handleReasoningAction,
+        getState: function () {
+            return state;
+        },
+        destroy: function () {
+            detachSpotlight();
+        }
     };
-
-    if (typeof module !== "undefined" && module.exports) {
-        module.exports = api;
-    }
-
-    global.HelloIAmLorem = api;
 
     if (typeof document !== "undefined") {
         if (document.readyState === "loading") {
@@ -635,4 +441,6 @@
             initApp();
         }
     }
-})(typeof window !== "undefined" ? window : globalThis);
+
+    return api;
+});

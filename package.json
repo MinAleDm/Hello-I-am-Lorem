@@ -1,7 +1,7 @@
 {
-  "name": "hello-i-am-lorem",
+  "name": "thinking-ui-studio",
   "version": "2.0.0",
-  "description": "Atmospheric static showcase app with name profiling, local history and GitHub Pages deployment.",
+  "description": "Static adaptive frontend case study with explainable UI changes, local-first memory and GitHub Pages deployment.",
   "main": "src/scripts/app.js",
   "scripts": {
     "test": "node ./node_modules/jest/bin/jest.js",

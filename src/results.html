@@ -1,58 +1,58 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Панель качества Hello, I am Lorem: визуализация результатов тестов и готовности проекта к публикации.">
-    <title>Hello, I am Lorem - Quality Lab</title>
+    <meta name="description" content="Thinking UI Studio quality dashboard: local test visibility for a static adaptive frontend project.">
+    <title>Thinking UI Studio / Quality</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="icon" href="assets/icons/icon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="styles/quality.css">
 </head>
 <body>
-    <div class="shell">
-        <header class="topbar">
-            <a class="brand" href="index.html">
-                <span class="brand-mark">L</span>
+    <div class="quality-shell">
+        <header class="quality-topbar">
+            <a class="brand" href="index.html" aria-label="Thinking UI Studio">
+                <span class="brand-mark">T</span>
                 <span class="brand-copy">
-                    <strong>Hello, I am Lorem</strong>
-                    <small>quality lab</small>
+                    <strong>Thinking UI Studio</strong>
+                    <small>quality dashboard</small>
                 </span>
             </a>
 
-            <nav class="nav">
-                <a href="index.html">Студия</a>
-                <a class="is-active" href="results.html">Качество</a>
+            <nav class="quality-nav" aria-label="Primary">
+                <a href="index.html">Studio</a>
+                <a class="is-active" href="results.html">Quality</a>
             </nav>
         </header>
 
         <main class="quality-layout">
-            <section class="hero-card">
-                <p class="eyebrow">Техническая уверенность</p>
-                <h1>Панель качества и готовности к GitHub.</h1>
+            <section class="quality-hero">
+                <p class="eyebrow">Engineering visibility</p>
+                <h1>Portfolio-grade frontend still needs a readable confidence layer.</h1>
                 <p class="lead">
-                    Эта страница показывает состояние тестового набора. Если отчёта ещё нет, интерфейс честно
-                    скажет об этом и подскажет следующий шаг.
+                    This dashboard reads the local Jest JSON report and turns it into a clear pre-deploy snapshot.
+                    If the report is missing, the page says so directly and explains the next step.
                 </p>
             </section>
 
             <section class="summary-grid" id="summaryGrid">
                 <article class="summary-card">
-                    <span class="summary-label">Всего тестов</span>
+                    <span class="summary-label">Total tests</span>
                     <strong id="totalTests">-</strong>
                 </article>
                 <article class="summary-card">
-                    <span class="summary-label">Пройдено</span>
+                    <span class="summary-label">Passed</span>
                     <strong id="passedTests">-</strong>
                 </article>
                 <article class="summary-card">
-                    <span class="summary-label">Ошибок</span>
+                    <span class="summary-label">Failed</span>
                     <strong id="failedTests">-</strong>
                 </article>
                 <article class="summary-card">
-                    <span class="summary-label">Наборов</span>
+                    <span class="summary-label">Suites</span>
                     <strong id="totalSuites">-</strong>
                 </article>
             </section>
@@ -60,14 +60,14 @@
             <section class="report-card">
                 <div class="report-head">
                     <div>
-                        <p class="eyebrow">Детали</p>
-                        <h2>Результаты тестов</h2>
+                        <p class="eyebrow">Report</p>
+                        <h2>Test results</h2>
                     </div>
-                    <span id="passRate" class="status-badge">Ожидание отчёта</span>
+                    <span id="passRate" class="status-badge">Waiting for report</span>
                 </div>
 
                 <div id="statusMessage" class="status-message">
-                    Ищу `test-results.json`. Если файл пуст или отсутствует, здесь появится инструкция.
+                    Looking for <code>test-results.json</code>. If it is missing or empty, this panel will tell you exactly what to run.
                 </div>
 
                 <div id="testSuites" class="suite-list"></div>

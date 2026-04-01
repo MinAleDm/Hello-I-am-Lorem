@@ -15,7 +15,7 @@ function setSummaryValue(key, value) {
 }
 
 function renderEmpty(message) {
-    elements.passRate.textContent = "Нет свежего отчёта";
+    elements.passRate.textContent = "No fresh report";
     elements.passRate.classList.add("warning");
     elements.statusMessage.textContent = message;
     elements.testSuites.innerHTML = "";
@@ -30,7 +30,7 @@ function createAssertionItem(assertion) {
 
     const meta = document.createElement("span");
     meta.className = `assertion-status ${assertion.status}`;
-    meta.textContent = `${assertion.status} · ${assertion.duration ?? 0} мс`;
+    meta.textContent = `${assertion.status} · ${assertion.duration ?? 0} ms`;
 
     item.appendChild(title);
     item.appendChild(meta);
@@ -53,8 +53,8 @@ function renderReport(results) {
     elements.passRate.classList.toggle("warning", failed > 0);
     elements.passRate.classList.toggle("success", failed === 0 && total > 0);
     elements.statusMessage.textContent = failed === 0
-        ? "Тестовый набор выглядит стабильно. Это хороший сигнал перед публикацией на GitHub."
-        : "Есть упавшие проверки. Перед публикацией лучше ещё раз прогнать пакет локально.";
+        ? "The test suite looks stable. That is a good pre-deploy signal for a static GitHub Pages release."
+        : "There are failing checks. Run the suite locally again before publishing.";
 
     elements.testSuites.innerHTML = "";
 
@@ -93,5 +93,5 @@ fetch("test-results.json", { cache: "no-store" })
     })
     .then(renderReport)
     .catch(() => {
-        renderEmpty("Отчёт пока не сформирован. Запусти `npm install`, затем `npm run test:report`, и панель обновится.");
+        renderEmpty("The report is not available yet. Run `npm install`, then `npm run test:report`, and this dashboard will refresh.");
     });

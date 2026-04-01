@@ -1,10 +1,18 @@
-const CACHE_NAME = "hello-i-am-lorem-v2";
+const CACHE_NAME = "thinking-ui-studio-v3";
 const ASSETS = [
     "./",
     "./index.html",
     "./results.html",
     "./styles/main.css",
     "./styles/quality.css",
+    "./scripts/core/content.js",
+    "./scripts/core/profile.js",
+    "./scripts/core/storage.js",
+    "./scripts/core/behavior-tracker.js",
+    "./scripts/core/state.js",
+    "./scripts/core/adaptation-engine.js",
+    "./scripts/renderers/app-renderer.js",
+    "./scripts/utils/animation.js",
     "./scripts/app.js",
     "./scripts/quality.js",
     "./manifest.webmanifest",
