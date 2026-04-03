@@ -64,7 +64,7 @@ export function applySuggestionEffect(
             : [...workspace.pinnedPanels, "insights"],
         },
         artifacts,
-        note: "Insights were pinned to keep the evidence in view.",
+        note: "Инсайты закреплены, чтобы аргументы оставались на виду.",
       };
     case "compact-density":
       return {
@@ -73,7 +73,7 @@ export function applySuggestionEffect(
           density: "compact",
         },
         artifacts,
-        note: "The workspace switched to compact density.",
+        note: "Рабочая область переключена на компактную плотность.",
       };
     case "open-compare-mode":
       return {
@@ -82,7 +82,7 @@ export function applySuggestionEffect(
           compareMode: true,
         },
         artifacts,
-        note: "Compare mode is now on.",
+        note: "Режим сравнения включён.",
       };
     case "collapse-supporting-details":
       return {
@@ -93,7 +93,7 @@ export function applySuggestionEffect(
           ),
         },
         artifacts,
-        note: "Supporting detail sections were collapsed.",
+        note: "Вспомогательные разделы свернуты.",
       };
     case "highlight-decision-criteria":
       return {
@@ -102,7 +102,7 @@ export function applySuggestionEffect(
           highlightedCriteria: true,
         },
         artifacts,
-        note: "Decision criteria are now highlighted.",
+        note: "Критерии решения теперь подсвечены.",
       };
     case "freeze-layout":
       return {
@@ -111,7 +111,7 @@ export function applySuggestionEffect(
           frozenLayout: true,
         },
         artifacts,
-        note: "The current layout is now frozen.",
+        note: "Текущая компоновка зафиксирована.",
       };
     case "surface-recommendation":
       return {
@@ -121,7 +121,7 @@ export function applySuggestionEffect(
           collapsedSections: workspace.collapsedSections.filter((section) => section !== "recommendation"),
         },
         artifacts,
-        note: "The recommendation block was surfaced.",
+        note: "Блок с рекомендацией поднят выше.",
       };
     case "generate-decision-summary":
       return {
@@ -132,18 +132,18 @@ export function applySuggestionEffect(
         artifacts: {
           ...artifacts,
           summary:
-            `${artifacts.summary}\n\nDecision: ${artifacts.finalDecision || "Still in progress"}\n` +
-            `Why this path: ${artifacts.rationale || "Rationale still being refined."}\n` +
-            `Next step: ${artifacts.nextStep || "Next step not set yet."}`,
+            `${artifacts.summary}\n\nРешение: ${artifacts.finalDecision || "Ещё не зафиксировано"}\n` +
+            `Почему этот путь: ${artifacts.rationale || "Обоснование ещё уточняется."}\n` +
+            `Следующий шаг: ${artifacts.nextStep || "Следующий шаг пока не задан."}`,
         },
         stage: "summary",
-        note: "A final decision summary was prepared.",
+        note: "Финальное резюме по решению подготовлено.",
       };
     default:
       return {
         workspace,
         artifacts,
-        note: "No change applied.",
+        note: "Изменения не применены.",
       };
   }
 }

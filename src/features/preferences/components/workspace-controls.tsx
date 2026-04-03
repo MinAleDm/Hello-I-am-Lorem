@@ -27,47 +27,47 @@ export function WorkspaceControls({
         <div>
           <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-ink-950/42">
             <LayoutTemplate className="h-3.5 w-3.5" />
-            Workspace controls
+            Управление пространством
           </div>
-          <h3 className="mt-3 text-2xl font-semibold text-ink-950">Stable layout settings</h3>
+          <h3 className="mt-3 text-2xl font-semibold text-ink-950">Спокойные настройки компоновки</h3>
         </div>
-        {workspace.frozenLayout ? <Badge tone="sage">Frozen</Badge> : null}
+        {workspace.frozenLayout ? <Badge tone="sage">Зафиксировано</Badge> : null}
       </div>
 
       <div className="mt-5 grid gap-3">
         <ControlRow
           icon={Shrink}
-          title={`Density: ${workspace.density}`}
-          body="Switch between comfortable and compact spacing."
-          actionLabel="Toggle density"
+          title={workspace.density === "compact" ? "Плотность: компактная" : "Плотность: комфортная"}
+          body="Переключайтесь между свободными и компактными отступами."
+          actionLabel="Сменить плотность"
           onAction={onDensityToggle}
         />
         <ControlRow
           icon={PanelTop}
-          title={workspace.compareMode ? "Compare mode is on" : "Compare mode is off"}
-          body="Lay options against the same criteria when you want side-by-side evaluation."
-          actionLabel={workspace.compareMode ? "Hide compare table" : "Show compare table"}
+          title={workspace.compareMode ? "Режим сравнения включён" : "Режим сравнения выключен"}
+          body="Сравнивайте варианты по одним и тем же критериям, когда нужен обзор бок о бок."
+          actionLabel={workspace.compareMode ? "Скрыть таблицу сравнения" : "Показать таблицу сравнения"}
           onAction={onCompareToggle}
         />
         <ControlRow
           icon={Pin}
-          title={workspace.pinnedPanels.includes("insights") ? "Insights are pinned" : "Pin insights"}
-          body="Keep evidence visible in the right rail while you make the final call."
-          actionLabel={workspace.pinnedPanels.includes("insights") ? "Unpin insights" : "Pin insights"}
+          title={workspace.pinnedPanels.includes("insights") ? "Инсайты закреплены" : "Закрепить инсайты"}
+          body="Держите аргументы на виду в правой колонке, пока формулируете финальный выбор."
+          actionLabel={workspace.pinnedPanels.includes("insights") ? "Открепить инсайты" : "Закрепить инсайты"}
           onAction={onPinInsights}
         />
         <ControlRow
           icon={Sparkle}
-          title={workspace.highlightedCriteria ? "Criteria are highlighted" : "Highlight criteria"}
-          body="Visually anchor what matters most during option review."
-          actionLabel={workspace.highlightedCriteria ? "Remove highlight" : "Highlight criteria"}
+          title={workspace.highlightedCriteria ? "Критерии подсвечены" : "Подсветить критерии"}
+          body="Зрительно зафиксируйте то, что важнее всего, пока оцениваете варианты."
+          actionLabel={workspace.highlightedCriteria ? "Убрать подсветку" : "Подсветить критерии"}
           onAction={onHighlightToggle}
         />
         <ControlRow
           icon={LayoutTemplate}
-          title={workspace.frozenLayout ? "Layout is frozen" : "Freeze current layout"}
-          body="Hold the interface steady while you finish the recommendation."
-          actionLabel={workspace.frozenLayout ? "Unfreeze" : "Freeze layout"}
+          title={workspace.frozenLayout ? "Компоновка зафиксирована" : "Зафиксировать текущую компоновку"}
+          body="Сохраните интерфейс стабильным, пока завершаете рекомендацию."
+          actionLabel={workspace.frozenLayout ? "Снять фиксацию" : "Зафиксировать"}
           onAction={onFrozenToggle}
         />
       </div>

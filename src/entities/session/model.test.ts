@@ -6,20 +6,20 @@ describe("session model", () => {
     const draft = createDraftFromTemplate("product-strategy");
     const result = createSessionFromDraft(draft);
 
-    expect(result.session.title).toBe("Position the next FocusBoard release");
+    expect(result.session.title).toBe("Определить фокус следующего релиза FocusBoard");
     expect(result.session.priorities.length).toBeGreaterThan(1);
     expect(result.artifacts.options.length).toBeGreaterThan(1);
-    expect(result.artifacts.finalDecision).toContain("solo");
+    expect(result.artifacts.finalDecision).toContain("индивиду");
   });
 
   it("lets the draft override template text", () => {
     const draft = createDraftFromTemplate("career-decision");
-    draft.title = "Choose the next chapter";
-    draft.decisionQuestion = "Which role sets up the strongest two-year arc?";
+    draft.title = "Выбрать следующую главу";
+    draft.decisionQuestion = "Какая роль создаёт самую сильную траекторию на два года?";
 
     const result = createSessionFromDraft(draft);
 
-    expect(result.session.title).toBe("Choose the next chapter");
-    expect(result.session.decisionQuestion).toBe("Which role sets up the strongest two-year arc?");
+    expect(result.session.title).toBe("Выбрать следующую главу");
+    expect(result.session.decisionQuestion).toBe("Какая роль создаёт самую сильную траекторию на два года?");
   });
 });

@@ -14,7 +14,7 @@ export function OptionsCompareTable({ criteria, options }: OptionsCompareTablePr
         <table className="min-w-full border-collapse text-left text-sm">
           <thead className="bg-ink-950/[0.03]">
             <tr>
-              <th className="px-4 py-3 font-semibold text-ink-950">Criteria</th>
+              <th className="px-4 py-3 font-semibold text-ink-950">Критерии</th>
               {options.map((option) => (
                 <th key={option.id} className="px-4 py-3 font-semibold text-ink-950">
                   <div className="flex flex-col gap-1">

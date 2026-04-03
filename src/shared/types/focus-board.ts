@@ -6,11 +6,11 @@ export type SessionTemplateId =
   | "open-exploration";
 
 export type OutputFormat =
-  | "Decision memo"
-  | "Comparison table"
-  | "Recommendation brief"
-  | "Executive summary"
-  | "Talking points";
+  | "Мемо по решению"
+  | "Таблица сравнения"
+  | "Краткая рекомендация"
+  | "Резюме для руководителя"
+  | "Тезисы";
 
 export type AppStage = "start" | "workspace" | "summary";
 

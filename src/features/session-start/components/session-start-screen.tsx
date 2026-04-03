@@ -3,6 +3,7 @@ import { Check, Compass, Layers3, LockKeyhole, Sparkles } from "lucide-react";
 import { getDefaultDraft } from "@/app/store/use-focus-board-store";
 import { createDraftFromTemplate } from "@/entities/session/model";
 import { OUTPUT_FORMATS, SESSION_TEMPLATES } from "@/shared/config/templates";
+import { FocusBoardLogo } from "@/shared/ui/focusboard-logo";
 import { Button } from "@/shared/ui/button";
 import { InputField, SelectField, TextareaField } from "@/shared/ui/field";
 import { Surface } from "@/shared/ui/surface";
@@ -29,40 +30,38 @@ export function SessionStartScreen({ onStart }: SessionStartScreenProps) {
       <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr]">
         <section className="py-4">
           <div className="max-w-2xl">
-            <span className="inline-flex rounded-full border border-ink-950/8 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em] text-ink-950/62">
-              FocusBoard
-            </span>
+            <FocusBoardLogo />
             <h1 className="mt-6 max-w-3xl text-5xl font-semibold leading-[1.02] text-ink-950 sm:text-6xl">
-              A calmer way to work through a complex decision.
+              Спокойный способ пройти через сложное решение.
             </h1>
           </div>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-ink-950/64">
-            FocusBoard helps turn a messy prompt into structured reasoning, tradeoff analysis,
-            and a final recommendation. The interface stays stable and only offers lightweight,
-            explainable suggestions.
+            FocusBoard помогает превратить расплывчатый вопрос в понятную структуру,
+            анализ компромиссов и итоговую рекомендацию. Интерфейс остаётся стабильным
+            и предлагает только лёгкие, объяснимые подсказки.
           </p>
 
           <div className="mt-10 space-y-4 border-t border-ink-950/8 pt-6">
             {[
               {
                 icon: Compass,
-                title: "Structured thinking",
-                body: "Move from a messy question to insights, options, and a final call without losing the thread.",
+                title: "Структурное мышление",
+                body: "Переходите от неясного вопроса к инсайтам, вариантам и финальному выбору без потери контекста.",
               },
               {
                 icon: Sparkles,
-                title: "Explainable suggestions",
-                body: "Recommendations are small, reversible, and written in plain product language.",
+                title: "Объяснимые подсказки",
+                body: "Рекомендации маленькие, обратимые и сформулированы простым человеческим языком.",
               },
               {
                 icon: LockKeyhole,
-                title: "Stable by default",
-                body: "The workspace favors calm continuity over clever or surprising adaptation.",
+                title: "Стабильность по умолчанию",
+                body: "Рабочее пространство выбирает спокойную непрерывность вместо резких и неожиданно умных перестроек.",
               },
               {
                 icon: Layers3,
-                title: "Local-first execution",
-                body: "Sessions, preferences, and behavior-aware adjustments stay on-device.",
+                title: "Локальная работа",
+                body: "Сессии, настройки и адаптация под поведение остаются на устройстве.",
               },
             ].map((item) => (
               <div key={item.title} className="flex gap-4 border-b border-ink-950/8 pb-4 last:border-b-0">
@@ -81,16 +80,15 @@ export function SessionStartScreen({ onStart }: SessionStartScreenProps) {
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.18em] text-ink-950/45">
-                  Session setup
+                  Настройка сессии
                 </p>
-                <h2 className="mt-3 text-3xl font-semibold text-ink-950">Start with a stable brief.</h2>
+                <h2 className="mt-3 text-3xl font-semibold text-ink-950">Начните со спокойного брифа.</h2>
                 <p className="mt-3 max-w-xl text-sm leading-6 text-ink-950/65">
-                  Choose a template to seed the session, then adjust the brief before entering the
-                  workspace.
+                  Выберите шаблон для старта, а затем подправьте бриф перед входом в рабочее пространство.
                 </p>
               </div>
               <Button variant="ghost" size="sm" onClick={() => setDraft(getDefaultDraft())}>
-                Reset
+                Сбросить
               </Button>
             </div>
 
@@ -113,14 +111,14 @@ export function SessionStartScreen({ onStart }: SessionStartScreenProps) {
               }}
             >
               <InputField
-                label="Session title"
-                placeholder="Name the decision clearly."
+                label="Название сессии"
+                placeholder="Коротко и ясно назовите решение."
                 value={draft.title}
                 onChange={(event) => setDraft((current) => ({ ...current, title: event.target.value }))}
               />
               <TextareaField
-                label="What are you trying to decide?"
-                placeholder="Describe the choice, uncertainty, or evaluation question."
+                label="Что именно вы пытаетесь решить?"
+                placeholder="Опишите выбор, неопределённость или вопрос для оценки."
                 rows={4}
                 value={draft.decisionQuestion}
                 onChange={(event) =>
@@ -129,8 +127,8 @@ export function SessionStartScreen({ onStart }: SessionStartScreenProps) {
               />
               <div className="grid gap-5 md:grid-cols-2">
                 <TextareaField
-                  label="What matters most?"
-                  hint="One priority per line."
+                  label="Что важнее всего?"
+                  hint="По одному приоритету на строку."
                   rows={5}
                   value={draft.prioritiesText}
                   onChange={(event) =>
@@ -138,8 +136,8 @@ export function SessionStartScreen({ onStart }: SessionStartScreenProps) {
                   }
                 />
                 <TextareaField
-                  label="Constraints"
-                  hint="List timing, scope, or decision constraints."
+                  label="Ограничения"
+                  hint="Перечислите ограничения по срокам, объёму или контексту решения."
                   rows={5}
                   value={draft.constraintsText}
                   onChange={(event) =>
@@ -150,7 +148,7 @@ export function SessionStartScreen({ onStart }: SessionStartScreenProps) {
 
               <div className="grid gap-5 md:grid-cols-[1fr_auto] md:items-end">
                 <SelectField
-                  label="Desired output format"
+                  label="Желаемый формат результата"
                   value={draft.outputFormat}
                   onChange={(event) =>
                     setDraft((current) => ({
@@ -166,14 +164,14 @@ export function SessionStartScreen({ onStart }: SessionStartScreenProps) {
                   ))}
                 </SelectField>
                 <Button className="w-full md:w-auto" type="submit">
-                  Start session
+                  Начать сессию
                 </Button>
               </div>
             </form>
 
             <div className="mt-8 border-t border-ink-950/8 pt-5">
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-ink-950/42">
-                Selected template
+                Выбранный шаблон
               </p>
               <div className="mt-3 flex items-start gap-3">
                 <Check className="mt-1 h-4 w-4 text-ink-950/42" />

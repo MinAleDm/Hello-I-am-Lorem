@@ -231,7 +231,7 @@ export const useFocusBoardStore = create<FocusBoardStore>()(
               ...state.behavior,
               layoutToggles: state.behavior.layoutToggles + 1,
             },
-            lastActionNote: `Density set to ${density}.`,
+            lastActionNote: density === "compact" ? "Плотность переключена на компактную." : "Плотность переключена на комфортную.",
           }),
         ),
       toggleCompareMode: () =>
@@ -247,7 +247,7 @@ export const useFocusBoardStore = create<FocusBoardStore>()(
               compareActions: state.behavior.compareActions + 1,
               layoutToggles: state.behavior.layoutToggles + 1,
             },
-            lastActionNote: state.workspace.compareMode ? "Compare mode turned off." : "Compare mode turned on.",
+            lastActionNote: state.workspace.compareMode ? "Режим сравнения выключен." : "Режим сравнения включён.",
           }),
         ),
       togglePinnedPanel: (panel) =>
@@ -362,7 +362,7 @@ export const useFocusBoardStore = create<FocusBoardStore>()(
         set((state) => ({
           ...state,
           suggestions: updateSuggestionStatus(state.suggestions, suggestionId, "dismissed"),
-          lastActionNote: "Suggestion dismissed.",
+          lastActionNote: "Подсказка скрыта.",
         })),
       disableSuggestionType: (suggestionId) =>
         set((state) => {
@@ -378,7 +378,7 @@ export const useFocusBoardStore = create<FocusBoardStore>()(
               new Set([...state.disabledSuggestionTypes, suggestion.type]),
             ),
             suggestions: updateSuggestionStatus(state.suggestions, suggestionId, "disabled"),
-            lastActionNote: "Similar suggestions will stay hidden.",
+            lastActionNote: "Похожие подсказки больше не будут показываться.",
           };
         }),
       undoLastSuggestion: () =>
@@ -396,13 +396,13 @@ export const useFocusBoardStore = create<FocusBoardStore>()(
             artifacts: lastUndo.artifacts,
             suggestions: updateSuggestionStatus(state.suggestions, lastUndo.suggestionId, "pending" as SuggestionStatus),
             undoStack: remaining,
-            lastActionNote: "The last suggestion was undone.",
+            lastActionNote: "Последнее действие по подсказке отменено.",
           };
         }),
       clearLastActionNote: () => set((state) => ({ ...state, lastActionNote: null })),
     }),
     {
-      name: "focusboard-store-v1",
+      name: "focusboard-store-v2",
       partialize: (state) => ({
         stage: state.stage,
         session: state.session,

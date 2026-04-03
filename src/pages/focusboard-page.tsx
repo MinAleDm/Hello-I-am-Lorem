@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useShallow } from "zustand/react/shallow";
 import { WorkspaceView } from "@/features/workspace/components/workspace-view";
 import { SessionStartScreen } from "@/features/session-start/components/session-start-screen";
 import { SummaryView } from "@/features/summary/components/summary-view";
@@ -6,18 +7,20 @@ import { useWorkspaceScroll } from "@/shared/hooks/use-workspace-scroll";
 import { useFocusBoardStore } from "@/app/store/use-focus-board-store";
 
 export function FocusBoardPage() {
-  const state = useFocusBoardStore((store) => ({
-    stage: store.stage,
-    session: store.session,
-    workspace: store.workspace,
-    behavior: store.behavior,
-    suggestions: store.suggestions,
-    disabledSuggestionTypes: store.disabledSuggestionTypes,
-    artifacts: store.artifacts,
-    undoStack: store.undoStack,
-    lastActionNote: store.lastActionNote,
-    startedAt: store.startedAt,
-  }));
+  const state = useFocusBoardStore(
+    useShallow((store) => ({
+      stage: store.stage,
+      session: store.session,
+      workspace: store.workspace,
+      behavior: store.behavior,
+      suggestions: store.suggestions,
+      disabledSuggestionTypes: store.disabledSuggestionTypes,
+      artifacts: store.artifacts,
+      undoStack: store.undoStack,
+      lastActionNote: store.lastActionNote,
+      startedAt: store.startedAt,
+    })),
+  );
 
   const startSession = useFocusBoardStore((store) => store.startSession);
   const resetApp = useFocusBoardStore((store) => store.resetApp);

@@ -2,13 +2,13 @@ export function formatDateTime(iso: string) {
   const date = new Date(iso);
 
   if (Number.isNaN(date.getTime())) {
-    return "Just now";
+    return "Только что";
   }
 
-  return new Intl.DateTimeFormat("en-US", {
-    month: "short",
+  return new Intl.DateTimeFormat("ru-RU", {
+    month: "long",
     day: "numeric",
-    hour: "numeric",
+    hour: "2-digit",
     minute: "2-digit",
   }).format(date);
 }

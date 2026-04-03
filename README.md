@@ -1,114 +1,142 @@
 # FocusBoard
 
-FocusBoard is a frontend-only decision-support workspace that helps turn a messy question into a structured recommendation through calm information design, deterministic adaptive suggestions, and local-first state.
+FocusBoard — это локальный frontend-only продукт для поддержки принятия решений. Он помогает превратить расплывчатый вопрос в понятную структуру: краткую сводку, набор вариантов, компромиссы, риски, рекомендацию и финальное решение.
 
-## Problem Statement
+Проект задуман как спокойный, объяснимый и правдоподобный инструмент, а не как очередной "умный" интерфейс, который внезапно всё перестраивает за пользователя.
 
-A lot of complex decisions begin the same way: too much context, too many competing options, and no obvious next step. Most tools either stay too generic, become glorified note pages, or jump straight into “smart” automation that feels opaque and disorienting.
+## Что это за продукт
 
-FocusBoard explores a different product angle:
+FocusBoard решает простую, но частую проблему: сложные решения редко начинаются с ясной формулировки. Обычно у пользователя есть:
 
-- keep the workspace stable
-- make reasoning legible
-- assist the user with lightweight recommendations
-- avoid surprise-driven adaptive UI
+- слишком много контекста
+- несколько конкурирующих направлений
+- неочевидные критерии выбора
+- ощущение перегруза уже на старте
 
-The goal is not to automate the decision. The goal is to help the user structure it well enough to make one confidently.
+Обычные заметки не помогают удержать структуру, а многие "AI-first" интерфейсы либо слишком шумные, либо ведут себя непрозрачно. FocusBoard идёт в другую сторону:
 
-## Product Concept
+- держит интерфейс стабильным
+- помогает пользователю увидеть ход мысли
+- предлагает маленькие и обратимые подсказки
+- не пытается автоматизировать само решение
 
-FocusBoard is positioned as an explainable decision-support workspace.
+Цель продукта не в том, чтобы решить за человека. Цель в том, чтобы сделать его собственное решение более ясным, аргументированным и уверенным.
 
-It is designed for scenarios like:
+## Продуктовая рамка
 
-- evaluating product directions
-- comparing strategic options
-- making a career or hiring decision
-- reviewing long AI-generated answers
-- organizing reasoning before committing to a path
+### Для кого
 
-The product flow is intentionally simple:
+FocusBoard хорошо подходит для сценариев, где нужно не просто записать мысли, а аккуратно пройти путь от вопроса к выбору:
 
-1. Start a session with a title, decision question, priorities, constraints, and desired output.
-2. Work inside a stable three-panel workspace.
-3. Receive low-risk, reversible suggestions based on lightweight behavioral signals.
-4. Finish with a summary view that packages the decision, rationale, and adaptive history.
+- продуктовые и стратегические решения
+- сравнение нескольких направлений развития
+- карьерные и профессиональные выборы
+- UX-ревью и оценка редизайна
+- разбор длинных AI-ответов перед финальной формулировкой
 
-## Key UX Principles
+### Основная ценность
 
-- Stability first: the workspace should feel predictable and calm.
-- Suggestions, not surprises: adaptive behavior recommends actions instead of aggressively reshaping the interface.
-- Explainability: every suggestion is written in plain product language and states why it appeared.
-- Reversibility: applied suggestions can be undone.
-- Low cognitive load: the UI reduces complexity instead of performing for novelty.
-- One clear flow: the next meaningful step should stay visible.
-- Portfolio quality: the product story, UI, and code all need to feel believable and publicly showcaseable.
+Продукт даёт пользователю три вещи:
 
-## Feature Overview
+1. Структуру: вопрос превращается в набор понятных секций и опорных артефактов.
+2. Спокойствие: интерфейс не дёргается и не ломает контекст в критичный момент.
+3. Объяснимость: любые адаптивные подсказки прозрачны и обратимы.
 
-### Session setup
+### Позиционирование
 
-- Minimal start screen with editable decision brief
-- Preset templates with realistic seeded scenarios
-- Product strategy, career decision, UX review, compare-options, and open-exploration examples
+FocusBoard можно описать как explainable decision-support workspace:
 
-### Main workspace
+- не менеджер задач
+- не чат
+- не дашборд ради дашборда
+- не opaque AI-автоматизация
 
-- Left brief panel for session context
-- Center analysis column for summary, insights, options, tradeoffs, risks, recommendation, and notes
-- Right decision rail for shortlist, rationale, final decision, and next step
-- Suggestion rail with apply, dismiss, disable-similar, and undo support
-- Stable layout controls for density, compare mode, criteria highlighting, pinning insights, and freezing the layout
+Это рабочее пространство для вдумчивого решения, где адаптация помогает, но не перехватывает контроль.
 
-### Session summary
+## Как устроен пользовательский опыт
 
-- Review-ready summary state
-- Brief recap, key insights, recommendation, final rationale, and next step
-- Accepted, dismissed, and disabled suggestion history
-- Saved workspace preferences and learned tendencies
+### 1. Старт сессии
 
-## Adaptive Logic
+Пользователь начинает с брифа:
 
-FocusBoard does not use ML, a backend, or hidden heuristics.
+- название решения
+- главный вопрос
+- приоритеты
+- ограничения
+- желаемый формат результата
 
-The adaptive layer is deterministic and intentionally modest:
+Для быстрого старта есть несколько seeded-шаблонов с правдоподобными сценариями:
 
-1. A behavior tracker records lightweight signals:
-   - scroll bursts
-   - section dwell time
-   - repeated section reopen actions
-   - compare actions
-   - note edits
-   - layout toggles
+- продуктовая стратегия
+- карьерное решение
+- UX-ревью
+- сравнение вариантов
+- открытое исследование
 
-2. Selectors derive soft working states such as:
-   - scanning
-   - reviewing
-   - comparing
-   - deciding
-   - finalizing
+### 2. Основная рабочая область
 
-3. A rules engine evaluates a small catalog of suggestions, including:
-   - pin insights
-   - compact density
-   - open compare mode
-   - collapse supporting details
-   - highlight decision criteria
-   - freeze layout
-   - surface the recommendation block
-   - generate a decision summary
+Рабочее пространство разбито на три зоны:
 
-4. A suggestion manager prevents duplicate spam and keeps the system legible through explicit statuses:
-   - pending
-   - applied
-   - dismissed
-   - disabled
+- слева — бриф и контекст
+- по центру — анализ: сводка, инсайты, варианты, компромиссы, риски, рекомендация, заметки
+- справа — панель решения, шорт-лист, обоснование и следующий шаг
 
-The key product principle is that behavior affects recommendations, not chaotic auto-layout changes.
+Интерфейс намеренно остаётся предсказуемым. Пользователь всегда понимает:
 
-## Architecture Overview
+- где находится
+- на каком этапе находится решение
+- какой следующий осмысленный шаг
 
-The app is built with:
+### 3. Лёгкая адаптация
+
+FocusBoard не использует ML-модель, бэкенд или скрытую магию. Вместо этого продукт отслеживает несколько лёгких сигналов поведения:
+
+- всплески скролла
+- время внимания к секциям
+- повторные открытия блоков
+- действия сравнения
+- редактирование заметок
+- смену настроек макета
+
+На основе этих сигналов система предлагает детерминированные подсказки:
+
+- закрепить инсайты
+- включить компактную плотность
+- открыть режим сравнения
+- свернуть второстепенные детали
+- подсветить критерии
+- зафиксировать компоновку
+- поднять рекомендацию выше
+- собрать итог по решению
+
+Ключевой принцип: поведение влияет на рекомендации, а не на хаотическое автоперестроение интерфейса.
+
+### 4. Финальное резюме
+
+Когда решение собрано, пользователь переходит в итоговое представление, где видит:
+
+- краткий итог
+- финальное решение
+- обоснование
+- следующий шаг
+- историю подсказок
+- сохранённые предпочтения рабочего пространства
+- замеченные поведенческие паттерны
+
+Это делает проект похожим не просто на UI-эксперимент, а на продукт с законченным пользовательским циклом.
+
+## Продуктовые принципы
+
+- Стабильность прежде всего. Интерфейс не должен неожиданно отнимать контроль.
+- Подсказки, а не сюрпризы. Адаптация предлагает действия, а не ломает раскладку.
+- Объяснимость. Каждая рекомендация должна быть понятна человеку без "чёрного ящика".
+- Обратимость. Пользователь может отменить применение подсказки.
+- Низкая когнитивная нагрузка. Система снимает сложность, а не добавляет её.
+- Достоверность. И UX, и тексты, и логика должны ощущаться как правдоподобный продукт.
+
+## Что важно с точки зрения реализации
+
+Приложение построено на:
 
 - React
 - TypeScript
@@ -116,10 +144,10 @@ The app is built with:
 - Tailwind CSS
 - Zustand
 - Framer Motion
-- Lucide icons
+- Lucide Icons
 - Vitest
 
-The codebase is organized around product slices instead of a single UI folder:
+Структура кода организована по продуктовым срезам:
 
 ```text
 src/
@@ -146,73 +174,62 @@ src/
   pages/
 ```
 
-Important implementation choices:
+Ключевые технические решения:
 
-- Typed domain models define the session, workspace state, behavior signals, suggestions, and decision artifacts.
-- Seeded templates provide credible product-like content without relying on placeholder copy.
-- The Zustand store persists key state to `localStorage` so the app feels local-first and complete.
-- Suggestion application is modeled as deterministic state mutation with undo snapshots.
-- The interface intentionally favors composable cards and focused components over a single oversized page file.
+- typed domain-модели для сессии, артефактов решения, поведения и подсказок
+- локальное сохранение состояния через Zustand persist
+- детерминированный rules engine для адаптивных рекомендаций
+- undo-логика для применённых подсказок
+- seed-контент вместо пустых заглушек, чтобы продукт ощущался живым
 
-## Why This Project Is Interesting
+## Почему проект интересен
 
-FocusBoard is meant to demonstrate more than UI polish.
+FocusBoard показывает не только "красивый интерфейс". Он демонстрирует связку из нескольких важных вещей:
 
-It shows:
+- продуктовое мышление и позиционирование
+- информационную архитектуру для сложных сценариев
+- объяснимый adaptive UI без хаоса
+- аккуратное моделирование состояния и поведения
+- локальный и автономный пользовательский опыт
+- кодовую структуру, которую удобно читать и развивать
 
-- product framing and positioning
-- information architecture for complex decisions
-- explainable adaptive interface design
-- deterministic interaction modeling
-- local-first state design
-- professional frontend structure with readable, typed logic
+Это делает проект хорошим кейсом на пересечении product thinking, UX systems и frontend architecture.
 
-This makes it a strong portfolio case because it sits at the intersection of product thinking, frontend architecture, UX systems, and practical implementation detail.
+## Локальная разработка
 
-## Local Development
-
-Install dependencies:
+Установка зависимостей:
 
 ```bash
 npm install
 ```
 
-Run the development server:
+Запуск dev-сервера:
 
 ```bash
 npm run dev
 ```
 
-Create a production build:
+Сборка production-версии:
 
 ```bash
 npm run build
 ```
 
-Run tests:
+Тесты:
 
 ```bash
 npm test
 ```
 
-## Possible Future Improvements
+## Что можно развить дальше
 
-- richer per-section editing for insights, options, tradeoffs, and risks
-- lightweight export to PDF or shareable decision brief
-- session history across multiple saved boards
-- keyboard command palette for advanced users
-- stronger analytics around decision criteria weighting
-- optional theming or workspace presets for different decision styles
+- экспорт итогового решения в PDF или shareable brief
+- история нескольких сохранённых сессий
+- более глубокое редактирование инсайтов, рисков и tradeoffs
+- настройка весов критериев решения
+- быстрые клавиатурные команды для опытных пользователей
+- разные product presets под типы решений
 
-## Portfolio Readiness
+## Статус проекта
 
-This project is intentionally designed to be easy to review.
-
-A hiring manager, product lead, or engineering reviewer should be able to understand:
-
-1. what the product is
-2. why it exists
-3. how the adaptive layer works
-4. why the implementation is careful rather than gimmicky
-
-That combination of clarity, restraint, and execution quality is the point of FocusBoard.
+Сейчас FocusBoard — это цельный frontend-only прототип с ясной продуктовой логикой, локальным состоянием, объяснимыми подсказками и завершённым пользовательским потоком от старта до финального резюме.

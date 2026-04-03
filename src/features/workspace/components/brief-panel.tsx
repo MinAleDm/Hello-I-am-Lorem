@@ -1,6 +1,7 @@
 import { Clock3, FileText, Flag, ShieldAlert } from "lucide-react";
 import { EditableTextarea } from "@/shared/ui/editable-textarea";
 import { Surface } from "@/shared/ui/surface";
+import { getTemplateLabel } from "@/shared/lib/labels";
 import { formatDateTime } from "@/shared/lib/time";
 import type { Session } from "@/shared/types/focus-board";
 
@@ -23,19 +24,19 @@ export function BriefPanel({
     <Surface className="rounded-[24px] p-5 sm:p-6">
       <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-ink-950/42">
         <Clock3 className="h-3.5 w-3.5" />
-        Session brief
+        Бриф сессии
       </div>
 
       <div className="mt-5 space-y-5">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-ink-950/38">Title</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-ink-950/38">Название</p>
           <EditableTextarea value={session.title} onCommit={onTitleCommit} rows={2} className="mt-2" />
         </div>
 
         <div>
           <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-ink-950/38">
             <FileText className="h-3.5 w-3.5" />
-            Core question
+            Главный вопрос
           </div>
           <EditableTextarea
             value={session.decisionQuestion}
@@ -49,7 +50,7 @@ export function BriefPanel({
           <div>
             <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-ink-950/38">
               <Flag className="h-3.5 w-3.5" />
-              What matters most
+              Что важнее всего
             </div>
             <EditableTextarea
               value={session.priorities.join("\n")}
@@ -69,7 +70,7 @@ export function BriefPanel({
           <div>
             <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-ink-950/38">
               <ShieldAlert className="h-3.5 w-3.5" />
-              Constraints
+              Ограничения
             </div>
             <EditableTextarea
               value={session.constraints.join("\n")}
@@ -89,11 +90,11 @@ export function BriefPanel({
       </div>
 
       <div className="mt-6 border-t border-ink-950/8 pt-4">
-        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-ink-950/42">Session metadata</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-ink-950/42">Метаданные сессии</p>
         <div className="mt-3 space-y-2 text-sm text-ink-950/64">
-          <p>Output format: {session.outputFormat}</p>
-          <p>Template: {session.template.replace("-", " ")}</p>
-          <p>Last updated: {formatDateTime(session.updatedAt)}</p>
+          <p>Формат результата: {session.outputFormat}</p>
+          <p>Шаблон: {getTemplateLabel(session.template)}</p>
+          <p>Обновлено: {formatDateTime(session.updatedAt)}</p>
         </div>
       </div>
     </Surface>

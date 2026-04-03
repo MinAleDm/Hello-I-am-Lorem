@@ -41,7 +41,7 @@ export function AnalysisSection({
         </div>
         <Button variant="ghost" size="sm" onClick={onToggle}>
           {collapsed ? <ChevronDown className="h-4 w-4" /> : <ChevronUp className="h-4 w-4" />}
-          {collapsed ? "Expand" : "Collapse"}
+          {collapsed ? "Развернуть" : "Свернуть"}
         </Button>
       </div>
 

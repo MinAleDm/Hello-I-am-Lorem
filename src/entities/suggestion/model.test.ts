@@ -45,6 +45,6 @@ describe("suggestion engine", () => {
     const effect = applySuggestionEffect("open-compare-mode", state.workspace, state.artifacts!);
 
     expect(effect.workspace.compareMode).toBe(true);
-    expect(effect.note).toContain("Compare mode");
+    expect(effect.note).toContain("Режим сравнения");
   });
 });

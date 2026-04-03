@@ -7,88 +7,88 @@ function outputFormat(value: OutputFormat) {
 export const SESSION_TEMPLATES: SessionTemplate[] = [
   {
     id: "product-strategy",
-    label: "Product strategy",
-    eyebrow: "Direction setting",
+    label: "Продуктовая стратегия",
+    eyebrow: "Выбор направления",
     description:
-      "Work through a positioning or roadmap choice with evidence, tradeoffs, and a recommendation.",
+      "Разберите выбор в позиционировании или дорожной карте через аргументы, компромиссы и рекомендацию.",
     session: {
-      title: "Position the next FocusBoard release",
+      title: "Определить фокус следующего релиза FocusBoard",
       decisionQuestion:
-        "Should the next release prioritize team collaboration, solo decision quality, or AI review workflows?",
+        "На чём должен сделать акцент следующий релиз: совместная работа команды, качество индивидуальных решений или сценарии ревью AI-ответов?",
       priorities: [
-        "Sharpen product differentiation within one quarter",
-        "Keep the first-use experience focused and easy to explain",
-        "Protect the calm, premium feel of the product",
+        "Усилить отличие продукта в течение одного квартала",
+        "Сохранить первый пользовательский опыт сфокусированным и простым для объяснения",
+        "Не потерять спокойное и премиальное ощущение от продукта",
       ],
       constraints: [
-        "One frontend engineer and one designer for six weeks",
-        "No backend scope in this release window",
-        "Must demo clearly in a portfolio and founder conversation",
+        "Один фронтенд-инженер и один дизайнер на шесть недель",
+        "В этом окне релиза нет бэкенд-объёма",
+        "Нужно ясно показывать решение в портфолио и на созвонах с фаундерами",
       ],
-      outputFormat: outputFormat("Recommendation brief"),
+      outputFormat: outputFormat("Краткая рекомендация"),
       template: "product-strategy",
     },
     artifacts: {
       summary:
-        "The strongest path is to deepen solo decision quality first. It keeps the product story sharp, showcases explainable UX clearly, and avoids premature collaboration complexity.",
+        "Самый сильный путь сейчас — сначала углубить качество индивидуального принятия решений. Это делает продуктовую историю чёткой, хорошо показывает объяснимый UX и не втягивает нас слишком рано в сложность совместной работы.",
       insights: [
         {
           id: "insight-1",
-          title: "Differentiation is clearest in a focused solo workflow",
+          title: "Наиболее явное отличие видно в сфокусированном индивидуальном сценарии",
           body:
-            "The product becomes easier to understand when it promises a calm path from messy question to decision, rather than a broad collaboration layer.",
+            "Продукт проще понять, когда он обещает спокойный путь от неясного вопроса к решению, а не широкий слой коллаборации.",
           weight: "Signal",
         },
         {
           id: "insight-2",
-          title: "Collaboration is attractive but broadens the surface too early",
+          title: "Коллаборация выглядит привлекательно, но слишком рано расширяет поверхность продукта",
           body:
-            "Shared boards, comments, and permissions expand scope quickly and make the first release feel less opinionated.",
+            "Общие доски, комментарии и права доступа быстро раздувают объём и делают первый релиз менее цельным.",
           weight: "Constraint",
         },
         {
           id: "insight-3",
-          title: "AI review workflows are useful when framed as a review aid, not a chat product",
+          title: "Сценарии ревью AI-ответов полезны, если подать их как вспомогательный инструмент, а не как чат-продукт",
           body:
-            "There is room to support long-answer review and comparison, but it should reinforce structured decision-making rather than become the main narrative.",
+            "У продукта есть пространство для поддержки ревью и сравнения длинных ответов, но это должно усиливать структурное мышление, а не становиться главным сюжетом.",
           weight: "Pattern",
         },
       ],
       criteria: [
         {
           id: "clarity",
-          label: "Story clarity",
+          label: "Ясность истории",
           weight: "High",
-          description: "How easy the direction is to explain and demo.",
+          description: "Насколько легко объяснить и показать это направление.",
         },
         {
           id: "scope",
-          label: "Delivery fit",
+          label: "Реалистичность доставки",
           weight: "High",
-          description: "How realistic the direction is for the current build window.",
+          description: "Насколько реалистично уложиться с этим направлением в текущее окно разработки.",
         },
         {
           id: "reuse",
-          label: "Platform leverage",
+          label: "Переиспользование платформы",
           weight: "Medium",
-          description: "How much of the system can be reused in future directions.",
+          description: "Сколько элементов системы можно переиспользовать в следующих направлениях.",
         },
       ],
       options: [
         {
           id: "solo",
-          label: "Double down on solo decision support",
+          label: "Усилить поддержку индивидуальных решений",
           summary:
-            "Refine the workspace, summary flow, and explainable suggestions for one-person decision sessions.",
-          verdict: "Best balance of clarity and execution confidence.",
+            "Отточить рабочую область, итоговый сценарий и объяснимые подсказки для сессий одного пользователя.",
+          verdict: "Лучший баланс ясности и уверенности в реализации.",
           pros: [
-            "Sharp product story",
-            "Great portfolio narrative around explainable UX",
-            "Smallest implementation surface",
+            "Чёткая продуктовая история",
+            "Сильный кейс про объяснимый UX для портфолио",
+            "Самая компактная поверхность реализации",
           ],
           cons: [
-            "Less collaborative upside in the short term",
-            "Needs strong content and workflow polish to feel substantial",
+            "Меньше преимуществ для совместной работы в краткосрочной перспективе",
+            "Понадобится сильный контент и аккуратная шлифовка сценария, чтобы решение ощущалось весомым",
           ],
           scores: {
             clarity: 5,
@@ -98,14 +98,14 @@ export const SESSION_TEMPLATES: SessionTemplate[] = [
         },
         {
           id: "team",
-          label: "Add lightweight team collaboration",
+          label: "Добавить лёгкую командную коллаборацию",
           summary:
-            "Introduce comments, shared views, and discussion moments around options and rationale.",
-          verdict: "Interesting later, but too broad right now.",
-          pros: ["Higher perceived product breadth", "Supports multi-stakeholder decisions"],
+            "Добавить комментарии, общие представления и точки обсуждения вокруг вариантов и обоснования.",
+          verdict: "Интересно позже, но сейчас слишком широко.",
+          pros: ["Более широкое восприятие продукта", "Поддержка решений с несколькими участниками"],
           cons: [
-            "Pulls the project toward dashboard complexity",
-            "Adds state and interaction overhead quickly",
+            "Тянет проект в сторону сложного дашборда",
+            "Быстро наращивает объём состояния и взаимодействий",
           ],
           scores: {
             clarity: 3,
@@ -115,14 +115,14 @@ export const SESSION_TEMPLATES: SessionTemplate[] = [
         },
         {
           id: "review",
-          label: "Focus on AI answer review workflows",
+          label: "Сфокусироваться на ревью AI-ответов",
           summary:
-            "Make the workspace best-in-class for reviewing a long AI output, extracting insights, and choosing a response.",
-          verdict: "Strong niche angle, but slightly narrower audience story.",
-          pros: ["Very current use case", "Demonstrates structured review mechanics"],
+            "Сделать рабочую область сильной в разборе длинных AI-ответов, извлечении инсайтов и выборе финального ответа.",
+          verdict: "Сильный нишевой угол, но история для аудитории чуть уже.",
+          pros: ["Очень актуальный сценарий", "Хорошо показывает механику структурного ревью"],
           cons: [
-            "Can be misread as a chat-adjacent product",
-            "Needs careful framing to avoid fake AI claims",
+            "Может быть воспринято как продукт рядом с чатом",
+            "Требует аккуратной подачи, чтобы не звучать как пустые AI-обещания",
           ],
           scores: {
             clarity: 4,
@@ -134,120 +134,120 @@ export const SESSION_TEMPLATES: SessionTemplate[] = [
       tradeoffs: [
         {
           id: "tradeoff-1",
-          title: "Breadth vs. legibility",
+          title: "Ширина против читаемости",
           summary:
-            "Broader workflows may look more ambitious, but a tighter narrative makes the product easier to trust.",
+            "Более широкие сценарии могут выглядеть амбициознее, но компактная история делает продукт более понятным и заслуживающим доверия.",
         },
         {
           id: "tradeoff-2",
-          title: "Novelty vs. stability",
+          title: "Новизна против стабильности",
           summary:
-            "The product should feel adaptive, but not volatile. Stable assistance is more credible than cleverness.",
+            "Продукт должен ощущаться адаптивным, но не дёрганым. Стабильная помощь вызывает больше доверия, чем эффектная хитрость.",
         },
       ],
       risks: [
         {
           id: "risk-1",
-          title: "The solo workflow could feel too narrow",
+          title: "Индивидуальный сценарий может показаться слишком узким",
           mitigation:
-            "Counter with strong seeded examples and a polished summary/export state that shows real utility.",
+            "Скомпенсировать это сильными стартовыми примерами и хорошо проработанным итоговым состоянием, которое показывает реальную пользу.",
         },
         {
           id: "risk-2",
-          title: "Adaptive suggestions could still feel gimmicky",
+          title: "Адаптивные подсказки всё ещё могут выглядеть как трюк ради эффекта",
           mitigation:
-            "Keep actions reversible, low-impact, and always explained in human language.",
+            "Сохранять действия обратимыми, низкорисковыми и всегда объяснять их простым человеческим языком.",
         },
       ],
       recommendation:
-        "Ship the solo decision-support direction first, then layer AI-review and collaboration extensions as clearly framed follow-on paths.",
+        "Сначала выпускать направление с акцентом на индивидуальную поддержку решений, а затем надстраивать ревью AI-ответов и коллаборацию как отдельные, ясно очерченные продолжения.",
       notes:
-        "The product feels strongest when the promise is crisp: turn a messy strategic question into a confident decision without adding noise.",
+        "Продукт ощущается сильнее всего, когда его обещание предельно чёткое: превратить запутанный стратегический вопрос в уверенное решение без лишнего шума.",
       shortlistedOptions: ["solo", "review"],
-      finalDecision: "Prioritize the solo decision-support release.",
+      finalDecision: "Приоритизировать релиз с поддержкой индивидуальных решений.",
       rationale:
-        "It creates the clearest portfolio narrative, showcases explainable UX, and fits the current implementation budget without losing ambition.",
-      nextStep: "Translate the recommendation into a launch story and a two-iteration roadmap.",
+        "Это создаёт самую ясную историю для портфолио, хорошо демонстрирует объяснимый UX и укладывается в текущий бюджет реализации без потери амбиции.",
+      nextStep: "Превратить рекомендацию в историю запуска и дорожную карту на две итерации.",
     },
   },
   {
     id: "career-decision",
-    label: "Career decision",
-    eyebrow: "Personal strategy",
+    label: "Карьерное решение",
+    eyebrow: "Личная стратегия",
     description:
-      "Compare paths with explicit criteria, tradeoffs, and a final recommendation you can stand behind.",
+      "Сравните пути через явные критерии, компромиссы и финальную рекомендацию, за которую не стыдно стоять.",
     session: {
-      title: "Choose the next staff-level role",
+      title: "Выбрать следующую роль staff-уровня",
       decisionQuestion:
-        "Should I join a growth-stage startup, stay independent as a consultant, or pursue a design engineering lead role?",
+        "Куда двигаться дальше: в стартап на стадии роста, в независимый консалтинг или в роль design engineering lead?",
       priorities: [
-        "Keep a strong builder-to-strategy balance",
-        "Preserve room for deep craft work",
-        "Choose a path that compounds reputation over two years",
+        "Сохранить сильный баланс между строительством и стратегией",
+        "Оставить место для глубокой ремесленной работы",
+        "Выбрать путь, который накапливает репутацию на горизонте двух лет",
       ],
       constraints: [
-        "Need financial stability within the next quarter",
-        "Prefer remote-friendly teams",
-        "Do not want to spend most of the week in pure people management",
+        "Нужна финансовая стабильность уже в следующем квартале",
+        "Предпочтение командам, дружелюбным к удалённой работе",
+        "Не хочется тратить большую часть недели на управление людьми",
       ],
-      outputFormat: outputFormat("Decision memo"),
+      outputFormat: outputFormat("Мемо по решению"),
       template: "career-decision",
     },
     artifacts: {
       summary:
-        "A design engineering lead role appears strongest because it keeps strategic leverage high without giving up hands-on product work.",
+        "Роль design engineering lead выглядит сильнее всего, потому что сохраняет высокий стратегический рычаг без отказа от практической продуктовой работы.",
       insights: [
         {
           id: "career-insight-1",
-          title: "Identity fit matters as much as compensation",
+          title: "Совпадение с профессиональной идентичностью не менее важно, чем компенсация",
           body:
-            "The long-term signal comes from work that reinforces a clear reputation: product-minded frontend leadership with execution depth.",
+            "Долгосрочный сигнал создаёт работа, которая укрепляет ясную репутацию: лидерство во фронтенде с продуктовым мышлением и глубиной исполнения.",
           weight: "Signal",
         },
         {
           id: "career-insight-2",
-          title: "Independent consulting offers freedom but higher context switching",
+          title: "Независимый консалтинг даёт свободу, но увеличивает переключение контекста",
           body:
-            "It improves autonomy, yet makes it harder to compound within one coherent product narrative.",
+            "Он усиливает автономию, но затрудняет накопление капитала внутри одной связной продуктовой истории.",
           weight: "Pattern",
         },
         {
           id: "career-insight-3",
-          title: "Growth-stage startups are compelling when scope is explicit",
+          title: "Стартапы на стадии роста особенно хороши, когда роль чётко очерчена",
           body:
-            "The best version of that path looks close to the lead role option, but with more variability in actual expectations.",
+            "Лучшая версия этого пути очень близка к lead-роли, но с большим разбросом реальных ожиданий.",
           weight: "Constraint",
         },
       ],
       criteria: [
         {
           id: "craft",
-          label: "Hands-on craft",
+          label: "Практическая работа руками",
           weight: "High",
-          description: "How much the role preserves direct building time.",
+          description: "Насколько роль сохраняет время на прямое создание продукта.",
         },
         {
           id: "trajectory",
-          label: "Long-term trajectory",
+          label: "Долгосрочная траектория",
           weight: "High",
-          description: "How strongly the role compounds narrative and credibility.",
+          description: "Насколько сильно роль накапливает историю и профессиональное доверие.",
         },
         {
           id: "stability",
-          label: "Near-term stability",
+          label: "Ближайшая стабильность",
           weight: "Medium",
-          description: "How reliable the path feels over the next few quarters.",
+          description: "Насколько надёжно этот путь выглядит на горизонте нескольких кварталов.",
         },
       ],
       options: [
         {
           id: "lead-role",
-          label: "Design engineering lead role",
+          label: "Роль design engineering lead",
           summary:
-            "Own product experience quality end to end while staying hands-on in the system.",
-          verdict: "Best alignment with current strengths and trajectory.",
-          pros: ["Balances leadership and craft", "Builds a strong market narrative"],
-          cons: ["May still include some coordination overhead"],
+            "Отвечать за качество продуктового опыта end-to-end, оставаясь руками внутри системы.",
+          verdict: "Лучшее совпадение с текущими сильными сторонами и траекторией.",
+          pros: ["Балансирует лидерство и ремесло", "Формирует сильную рыночную историю"],
+          cons: ["Может всё равно включать заметный координационный слой"],
           scores: {
             craft: 5,
             trajectory: 5,
@@ -256,12 +256,12 @@ export const SESSION_TEMPLATES: SessionTemplate[] = [
         },
         {
           id: "startup",
-          label: "Growth-stage startup staff IC",
+          label: "Staff IC в стартапе на стадии роста",
           summary:
-            "Join a product team with leverage, ambiguity, and meaningful shipping responsibility.",
-          verdict: "Good upside, but fit depends heavily on team maturity.",
-          pros: ["Strong product scope", "Clear execution visibility"],
-          cons: ["Role shape may drift in practice", "Potentially heavier firefighting"],
+            "Присоединиться к продуктовой команде с заметным влиянием, неопределённостью и реальной ответственностью за релизы.",
+          verdict: "Хороший апсайд, но совпадение сильно зависит от зрелости команды.",
+          pros: ["Сильный продуктовый масштаб", "Хорошая видимость результата"],
+          cons: ["Контуры роли могут уплывать в реальности", "Потенциально больше пожарного режима"],
           scores: {
             craft: 4,
             trajectory: 4,
@@ -270,12 +270,12 @@ export const SESSION_TEMPLATES: SessionTemplate[] = [
         },
         {
           id: "consulting",
-          label: "Independent consulting practice",
+          label: "Независимая консалтинговая практика",
           summary:
-            "Package product engineering and UX strategy into focused advisory-plus-build engagements.",
-          verdict: "Flexible, but currently less stable.",
-          pros: ["High autonomy", "Can curate projects intentionally"],
-          cons: ["Revenue volatility", "More context switching than desired"],
+            "Упаковать продуктовую инженерию и UX-стратегию в сфокусированные проекты с консалтингом и реализацией.",
+          verdict: "Гибко, но пока менее стабильно.",
+          pros: ["Высокая автономия", "Можно осознанно отбирать проекты"],
+          cons: ["Нестабильная выручка", "Больше переключения контекста, чем хотелось бы"],
           scores: {
             craft: 4,
             trajectory: 4,
@@ -286,100 +286,100 @@ export const SESSION_TEMPLATES: SessionTemplate[] = [
       tradeoffs: [
         {
           id: "career-tradeoff-1",
-          title: "Autonomy vs. compounding",
+          title: "Автономия против накопления эффекта",
           summary:
-            "The independent path offers more freedom, but roles inside a product can compound signal faster.",
+            "Независимый путь даёт больше свободы, но роли внутри продукта могут быстрее накапливать профессиональный сигнал.",
         },
       ],
       risks: [
         {
           id: "career-risk-1",
-          title: "A lead title could mask reduced building time",
+          title: "Lead-титул может скрывать сокращение времени на реальное строительство",
           mitigation:
-            "Clarify expectations around coding, prototyping, and system ownership during interviews.",
+            "На интервью заранее уточнить ожидания по кодингу, прототипированию и владению системой.",
         },
       ],
       recommendation:
-        "Prioritize design engineering lead roles with a visible product surface and a clear expectation of hands-on execution.",
+        "Приоритизировать роли design engineering lead с заметной продуктовой поверхностью и ясным ожиданием практической работы руками.",
       notes:
-        "The ideal next move should keep me close to product taste, not just process.",
+        "Идеальный следующий шаг должен оставлять меня ближе к продуктовой интуиции, а не только к процессу.",
       shortlistedOptions: ["lead-role", "startup"],
-      finalDecision: "Target design engineering lead roles first.",
+      finalDecision: "Сначала целиться в роли design engineering lead.",
       rationale:
-        "That path best protects craft, senior-level leverage, and a coherent narrative for the next chapter.",
-      nextStep: "Refine role filter criteria and prepare a focused portfolio narrative.",
+        "Этот путь лучше всего сохраняет ремесло, стратегический уровень влияния и цельную историю для следующей главы.",
+      nextStep: "Уточнить фильтр по ролям и подготовить сфокусированную историю для портфолио.",
     },
   },
   {
     id: "ux-review",
-    label: "UX review",
-    eyebrow: "Experience quality",
+    label: "UX-ревью",
+    eyebrow: "Качество опыта",
     description:
-      "Review a redesign direction with calmer structure, criteria, and practical recommendation support.",
+      "Разберите направление редизайна через спокойную структуру, критерии и практическую поддержку рекомендаций.",
     session: {
-      title: "Choose the dashboard redesign direction",
+      title: "Выбрать направление редизайна дашборда",
       decisionQuestion:
-        "Should the new dashboard emphasize speed, executive clarity, or guided workflow depth?",
+        "На чём должен делать акцент новый дашборд: на скорости, ясности для руководителей или глубине пошагового сценария?",
       priorities: [
-        "Reduce first-session overwhelm",
-        "Keep high-signal information visible",
-        "Improve presentation quality for stakeholder reviews",
+        "Снизить перегрузку в первой сессии",
+        "Держать высокосигнальную информацию на виду",
+        "Улучшить качество подачи для ревью со стейкхолдерами",
       ],
       constraints: [
-        "Must work on 13-inch laptop screens",
-        "No major backend schema changes this quarter",
-        "Existing users are sensitive to disruptive navigation changes",
+        "Должно работать на 13-дюймовых экранах ноутбуков",
+        "В этом квартале нельзя делать большие изменения схемы на бэкенде",
+        "Текущие пользователи чувствительны к резким изменениям навигации",
       ],
-      outputFormat: outputFormat("Executive summary"),
+      outputFormat: outputFormat("Резюме для руководителя"),
       template: "ux-review",
     },
     artifacts: {
       summary:
-        "The executive clarity direction is the best default because it simplifies orientation without sacrificing room for deeper workflow layers.",
+        "Направление с ясностью для руководителей — лучший вариант по умолчанию, потому что оно упрощает ориентирование, не жертвуя пространством для более глубоких сценариев.",
       insights: [
         {
           id: "ux-insight-1",
-          title: "Speed-first designs tend to hide important context too early",
+          title: "Дизайн с акцентом на скорость часто слишком рано прячет важный контекст",
           body:
-            "Fast surfaces are appealing, but users still need enough rationale and supporting detail to trust their next move.",
+            "Быстрые интерфейсы выглядят привлекательно, но пользователям всё равно нужна достаточная логика и поддерживающие детали, чтобы доверять следующему шагу.",
           weight: "Pattern",
         },
         {
           id: "ux-insight-2",
-          title: "Executive clarity creates a strong first impression and review story",
+          title: "Ясность для руководителей создаёт сильное первое впечатление и удобную историю для ревью",
           body:
-            "It makes the interface easier to explain and gives leadership a clearer picture of why each section exists.",
+            "Такой подход упрощает объяснение интерфейса и даёт руководству более ясное понимание, зачем нужен каждый раздел.",
           weight: "Signal",
         },
       ],
       criteria: [
         {
           id: "orientation",
-          label: "Orientation",
+          label: "Ориентация",
           weight: "High",
-          description: "How quickly the layout explains itself to a new user.",
+          description: "Насколько быстро новая компоновка объясняет себя пользователю.",
         },
         {
           id: "depth",
-          label: "Depth",
+          label: "Глубина",
           weight: "Medium",
-          description: "How well the design supports follow-up work after the first scan.",
+          description: "Насколько хорошо дизайн поддерживает дальнейшую работу после первого обзора.",
         },
         {
           id: "disruption",
-          label: "Migration risk",
+          label: "Риск миграции",
           weight: "High",
-          description: "How disruptive the direction is for current users.",
+          description: "Насколько болезненным это направление будет для текущих пользователей.",
         },
       ],
       options: [
         {
           id: "clarity",
-          label: "Executive clarity",
-          summary: "Lead with hierarchy, explanation, and obvious next steps.",
-          verdict: "Best overall default.",
-          pros: ["Strong orientation", "Easy to present", "Low migration risk"],
-          cons: ["Slightly less kinetic on first impression"],
+          label: "Ясность для руководителей",
+          summary: "Строить интерфейс на иерархии, пояснениях и очевидных следующих шагах.",
+          verdict: "Лучший вариант по умолчанию.",
+          pros: ["Сильная ориентация", "Легко презентовать", "Низкий риск миграции"],
+          cons: ["Чуть меньше визуальной динамики при первом впечатлении"],
           scores: {
             orientation: 5,
             depth: 4,
@@ -388,11 +388,11 @@ export const SESSION_TEMPLATES: SessionTemplate[] = [
         },
         {
           id: "speed",
-          label: "Speed-first compact design",
-          summary: "Minimize chrome and maximize dense information access.",
-          verdict: "Useful for experts, not ideal as the default.",
-          pros: ["Fast for power users", "Higher information density"],
-          cons: ["Higher cognitive load", "Weaker onboarding story"],
+          label: "Компактный дизайн с акцентом на скорость",
+          summary: "Свести визуальную оболочку к минимуму и дать максимально плотный доступ к информации.",
+          verdict: "Полезно для экспертов, но неидеально как вариант по умолчанию.",
+          pros: ["Быстро для продвинутых пользователей", "Выше информационная плотность"],
+          cons: ["Выше когнитивная нагрузка", "Слабее история онбординга"],
           scores: {
             orientation: 3,
             depth: 4,
@@ -403,99 +403,99 @@ export const SESSION_TEMPLATES: SessionTemplate[] = [
       tradeoffs: [
         {
           id: "ux-tradeoff-1",
-          title: "Immediate efficiency vs. calm orientation",
+          title: "Мгновенная эффективность против спокойной ориентации",
           summary:
-            "The most efficient layout for experts is not always the one that creates the strongest first-use confidence.",
+            "Самая эффективная компоновка для экспертов не всегда создаёт наибольшую уверенность при первом использовании.",
         },
       ],
       risks: [
         {
           id: "ux-risk-1",
-          title: "The clarity direction could feel conservative",
+          title: "Направление с упором на ясность может показаться слишком осторожным",
           mitigation:
-            "Use more deliberate motion, stronger typography, and higher quality content rather than more layout novelty.",
+            "Компенсировать это более осмысленным движением, сильной типографикой и качественным контентом, а не экзотической компоновкой.",
         },
       ],
       recommendation:
-        "Ship the executive clarity direction as the default and borrow a few compact affordances for advanced users.",
+        "Запускать направление с ясностью для руководителей как базовое и заимствовать несколько компактных паттернов для продвинутых пользователей.",
       notes:
-        "This decision is mostly about orientation quality, not decorative polish.",
+        "Это решение в первую очередь про качество ориентации, а не про декоративную полировку.",
       shortlistedOptions: ["clarity"],
-      finalDecision: "Move forward with the executive clarity direction.",
+      finalDecision: "Двигаться дальше с направлением ясности для руководителей.",
       rationale:
-        "It gives the team the best blend of calm, confidence, and presentation readiness.",
-      nextStep: "Translate the direction into a section hierarchy and migration plan.",
+        "Оно даёт команде лучший баланс спокойствия, уверенности и готовности к презентации.",
+      nextStep: "Перевести направление в иерархию разделов и план миграции.",
     },
   },
   {
     id: "compare-options",
-    label: "Compare options",
-    eyebrow: "Side-by-side analysis",
+    label: "Сравнение вариантов",
+    eyebrow: "Анализ бок о бок",
     description:
-      "Evaluate a finite set of options with scoring, tradeoffs, and a shortlist before committing.",
+      "Оцените конечный набор вариантов через баллы, компромиссы и шорт-лист перед финальным выбором.",
     session: {
-      title: "Pick the onboarding experiment to run next",
+      title: "Выбрать следующий эксперимент в онбординге",
       decisionQuestion:
-        "Which experiment should the team run next to improve qualified activation: guided setup, social proof, or role-based templates?",
+        "Какой эксперимент команде стоит запустить следующим для роста качественной активации: пошаговую настройку, социальные доказательства или ролевые шаблоны?",
       priorities: [
-        "Reach a measurable activation lift within one cycle",
-        "Keep engineering effort modest",
-        "Improve clarity without adding unnecessary steps",
+        "Получить измеримый рост активации за один цикл",
+        "Сохранить умеренный инженерный объём",
+        "Улучшить ясность без лишних шагов",
       ],
       constraints: [
-        "Only one experiment can ship this month",
-        "Instrumentation is available but backend changes are expensive",
+        "В этом месяце можно запустить только один эксперимент",
+        "Инструментация есть, но изменения на бэкенде дорогие",
       ],
-      outputFormat: outputFormat("Comparison table"),
+      outputFormat: outputFormat("Таблица сравнения"),
       template: "compare-options",
     },
     artifacts: {
       summary:
-        "Role-based templates stand out because they sharpen first-use relevance while staying lightweight to implement.",
+        "Ролевые шаблоны выделяются сильнее всего, потому что повышают релевантность первого использования и при этом остаются лёгкими в реализации.",
       insights: [
         {
           id: "compare-insight-1",
-          title: "Guided setup adds clarity but also friction",
+          title: "Пошаговая настройка добавляет ясность, но приносит и трение",
           body:
-            "It helps orientation, yet every extra step makes initial momentum more fragile.",
+            "Он помогает с ориентацией, но каждый дополнительный шаг делает первый импульс хрупче.",
           weight: "Pattern",
         },
         {
           id: "compare-insight-2",
-          title: "Role-based templates create relevance immediately",
+          title: "Ролевые шаблоны создают релевантность сразу",
           body:
-            "Templates give users a concrete starting point without forcing them through a long setup flow.",
+            "Шаблоны дают пользователям конкретную точку старта без длинного сценария настройки.",
           weight: "Signal",
         },
       ],
       criteria: [
         {
           id: "impact",
-          label: "Expected impact",
+          label: "Ожидаемый эффект",
           weight: "High",
-          description: "Likelihood of moving activation meaningfully.",
+          description: "Вероятность заметно сдвинуть активацию.",
         },
         {
           id: "effort",
-          label: "Implementation effort",
+          label: "Сложность реализации",
           weight: "High",
-          description: "Fit with current frontend-heavy constraints.",
+          description: "Насколько решение укладывается в текущие frontend-ограничения.",
         },
         {
           id: "clarity",
-          label: "User clarity",
+          label: "Ясность для пользователя",
           weight: "Medium",
-          description: "How directly the change helps users understand what to do next.",
+          description: "Насколько прямо изменение помогает пользователю понять следующий шаг.",
         },
       ],
       options: [
         {
           id: "templates",
-          label: "Role-based templates",
-          summary: "Pre-structure the first session around the user's role and goal.",
-          verdict: "Best overall tradeoff.",
-          pros: ["High relevance", "Low backend cost", "Good demo story"],
-          cons: ["Needs strong template quality to feel thoughtful"],
+          label: "Ролевые шаблоны",
+          summary: "Заранее структурировать первую сессию вокруг роли и цели пользователя.",
+          verdict: "Лучший общий компромисс.",
+          pros: ["Высокая релевантность", "Низкая стоимость на бэкенде", "Хорошая история для демо"],
+          cons: ["Понадобится сильное качество шаблонов, чтобы решение ощущалось продуманным"],
           scores: {
             impact: 4,
             effort: 5,
@@ -504,11 +504,11 @@ export const SESSION_TEMPLATES: SessionTemplate[] = [
         },
         {
           id: "guided-setup",
-          label: "Guided setup flow",
-          summary: "Step users through configuration before they reach the main product.",
-          verdict: "Useful, but slightly heavier.",
-          pros: ["Very explicit orientation", "Easy to reason about"],
-          cons: ["Adds steps", "Could feel slower"],
+          label: "Сценарий пошаговой настройки",
+          summary: "Пошагово провести пользователя через настройку до входа в основной продукт.",
+          verdict: "Полезно, но чуть тяжелее.",
+          pros: ["Очень явная ориентация", "Легко объяснить"],
+          cons: ["Добавляет шаги", "Может ощущаться медленнее"],
           scores: {
             impact: 4,
             effort: 3,
@@ -517,11 +517,11 @@ export const SESSION_TEMPLATES: SessionTemplate[] = [
         },
         {
           id: "social-proof",
-          label: "Social proof and examples",
-          summary: "Add stronger examples and credibility cues around the initial prompt.",
-          verdict: "Helpful support, but weaker than structural guidance.",
-          pros: ["Very light implementation", "Improves confidence quickly"],
-          cons: ["Less direct effect on action quality"],
+          label: "Социальные доказательства и примеры",
+          summary: "Добавить более сильные примеры и сигналы доверия вокруг первого запроса.",
+          verdict: "Полезная поддержка, но слабее структурного ведения.",
+          pros: ["Очень лёгкая реализация", "Быстро повышает уверенность"],
+          cons: ["Менее прямое влияние на качество действий"],
           scores: {
             impact: 3,
             effort: 5,
@@ -532,100 +532,100 @@ export const SESSION_TEMPLATES: SessionTemplate[] = [
       tradeoffs: [
         {
           id: "compare-tradeoff-1",
-          title: "Explicit guidance vs. speed to first value",
+          title: "Явное ведение против скорости к первой ценности",
           summary:
-            "The best onboarding move should clarify next steps without slowing the first meaningful action.",
+            "Лучшее решение для онбординга должно прояснять следующие шаги, не замедляя первое осмысленное действие.",
         },
       ],
       risks: [
         {
           id: "compare-risk-1",
-          title: "Templates could feel overly prescriptive",
+          title: "Шаблоны могут показаться слишком директивными",
           mitigation:
-            "Make them editable from the start and explain them as accelerators, not defaults users are stuck with.",
+            "Сделать их редактируемыми с самого начала и объяснять как ускорители, а не как жёсткие дефолты.",
         },
       ],
       recommendation:
-        "Run the role-based template experiment first and keep social proof improvements as supporting polish.",
+        "Сначала запускать эксперимент с ролевыми шаблонами, а улучшения блока с социальными доказательствами оставить как поддерживающую шлифовку.",
       notes:
-        "The strongest experiments usually remove blank-page friction without introducing a long setup ritual.",
+        "Самые сильные эксперименты обычно снимают страх пустого листа, не вводя длинный ритуал настройки.",
       shortlistedOptions: ["templates", "guided-setup"],
-      finalDecision: "Run the role-based template experiment next.",
+      finalDecision: "Следующим запускать эксперимент с ролевыми шаблонами.",
       rationale:
-        "It offers the best mix of impact, clarity, and implementation practicality.",
-      nextStep: "Draft the template set and success metric definition for the experiment review.",
+        "Это даёт лучший баланс эффекта, ясности и практичности реализации.",
+      nextStep: "Подготовить набор шаблонов и формулировку метрики успеха для ревью эксперимента.",
     },
   },
   {
     id: "open-exploration",
-    label: "Open exploration",
-    eyebrow: "Loose framing",
+    label: "Открытое исследование",
+    eyebrow: "Свободная рамка",
     description:
-      "Start from a broad question and give it enough structure to reveal a direction without over-constraining it.",
+      "Начните с широкого вопроса и добавьте ему ровно столько структуры, чтобы увидеть направление без излишних ограничений.",
     session: {
-      title: "Shape the next portfolio case study",
+      title: "Сформировать следующий кейс для портфолио",
       decisionQuestion:
-        "What kind of frontend case study would best demonstrate product thinking, interaction design, and engineering depth?",
+        "Какой frontend-кейс лучше всего покажет продуктовое мышление, дизайн взаимодействия и инженерную глубину?",
       priorities: [
-        "Show strong product judgment",
-        "Make the implementation believable and practical",
-        "Create a story that is easy for reviewers to grasp quickly",
+        "Показать сильное продуктовое суждение",
+        "Сделать реализацию правдоподобной и практичной",
+        "Построить историю, которую ревьюеру легко быстро ухватить",
       ],
       constraints: [
-        "Must stay frontend-only",
-        "Should be possible to explain in under two minutes",
-        "Avoid gimmicky interaction patterns",
+        "Нужно остаться в рамках только фронтенда",
+        "Кейс должен объясняться меньше чем за две минуты",
+        "Избегать вычурных паттернов взаимодействия",
       ],
-      outputFormat: outputFormat("Talking points"),
+      outputFormat: outputFormat("Тезисы"),
       template: "open-exploration",
     },
     artifacts: {
       summary:
-        "A focused decision-support product is the strongest case study direction because it naturally combines UX, product framing, and interaction logic.",
+        "Сфокусированный продукт для поддержки решений — самое сильное направление для кейса, потому что естественно объединяет UX, продуктовую рамку и логику взаимодействия.",
       insights: [
         {
           id: "exploration-insight-1",
-          title: "Reviewers understand purposeful tools faster than abstract concepts",
+          title: "Ревьюеры быстрее понимают осмысленные инструменты, чем абстрактные концепции",
           body:
-            "A concrete product with a clear user outcome communicates capability better than a purely visual experiment.",
+            "Конкретный продукт с ясным пользовательским результатом показывает способности лучше, чем чисто визуальный эксперимент.",
           weight: "Signal",
         },
         {
           id: "exploration-insight-2",
-          title: "Frontend depth shows up in interaction modeling, not just polish",
+          title: "Глубина frontend-работы проявляется в моделировании взаимодействий, а не только в полировке",
           body:
-            "The most credible projects pair calm design with meaningful state, behavior, and thoughtful decisions.",
+            "Наиболее убедительные проекты соединяют спокойный дизайн с осмысленным состоянием, поведением и продуманными решениями.",
           weight: "Pattern",
         },
       ],
       criteria: [
         {
           id: "credibility",
-          label: "Credibility",
+          label: "Достоверность",
           weight: "High",
-          description: "How believable the project feels as a real product idea.",
+          description: "Насколько правдоподобно проект ощущается как реальная продуктовая идея.",
         },
         {
           id: "range",
-          label: "Skill range",
+          label: "Широта навыков",
           weight: "High",
-          description: "How well the project demonstrates UX, product, and engineering depth.",
+          description: "Насколько хорошо проект показывает UX, продуктовую и инженерную глубину.",
         },
         {
           id: "story",
-          label: "Case-study story",
+          label: "История кейса",
           weight: "Medium",
-          description: "How easy it is to explain the product and its implementation choices.",
+          description: "Насколько легко объяснить продукт и выборы в его реализации.",
         },
       ],
       options: [
         {
           id: "decision-workspace",
-          label: "Decision-support workspace",
-          summary: "Help users move from a messy question to a structured recommendation.",
-          verdict: "Strongest overall case-study concept.",
-          pros: ["Product-led", "Good interaction depth", "Clear user value"],
-          cons: ["Needs thoughtful content to avoid feeling abstract"],
+          label: "Рабочее пространство для поддержки решений",
+          summary: "Помогать пользователю переходить от неясного вопроса к структурированной рекомендации.",
+          verdict: "Самая сильная концепция кейса в целом.",
+          pros: ["Продуктовый фокус", "Хорошая глубина взаимодействий", "Понятная ценность для пользователя"],
+          cons: ["Понадобится продуманный контент, чтобы идея не ощущалась абстрактной"],
           scores: {
             credibility: 5,
             range: 5,
@@ -634,11 +634,11 @@ export const SESSION_TEMPLATES: SessionTemplate[] = [
         },
         {
           id: "analytics-ui",
-          label: "Operational analytics UI",
-          summary: "Design a calm analytics product focused on review workflows.",
-          verdict: "Useful, but more dashboard-adjacent.",
-          pros: ["Easy to ground in familiar patterns", "Good information design angle"],
-          cons: ["Less differentiated narrative"],
+          label: "Интерфейс операционной аналитики",
+          summary: "Спроектировать спокойный аналитический продукт с акцентом на сценарии ревью.",
+          verdict: "Полезно, но ближе к привычному дашборду.",
+          pros: ["Легко опереться на знакомые паттерны", "Хороший угол для информационного дизайна"],
+          cons: ["Менее отличимая история"],
           scores: {
             credibility: 4,
             range: 4,
@@ -649,28 +649,28 @@ export const SESSION_TEMPLATES: SessionTemplate[] = [
       tradeoffs: [
         {
           id: "exploration-tradeoff-1",
-          title: "Familiarity vs. distinctiveness",
+          title: "Привычность против отличимости",
           summary:
-            "A more familiar product is easier to parse, but a sharper concept is more memorable in a portfolio review.",
+            "Более привычный продукт проще считывается, но более острый концепт лучше запоминается в ревью портфолио.",
         },
       ],
       risks: [
         {
           id: "exploration-risk-1",
-          title: "The project could feel over-designed for its use case",
+          title: "Проект может показаться чрезмерно отполированным для своей задачи",
           mitigation:
-            "Keep the visual system calm and let product logic, content, and explainability carry the differentiation.",
+            "Оставить визуальную систему спокойной и сделать так, чтобы отличие создавали продуктовая логика, контент и объяснимость.",
         },
       ],
       recommendation:
-        "Build the decision-support workspace and use adaptive suggestions as assistive, human-scale behaviors.",
+        "Делать рабочее пространство для поддержки решений, а адаптивные подсказки использовать как помогающее, человеческое поведение интерфейса.",
       notes:
-        "The best portfolio projects feel like a product somebody could actually want, not a concept exercise.",
+        "Лучшие проекты для портфолио ощущаются как продукт, который кто-то действительно мог бы захотеть, а не как концептуальное упражнение.",
       shortlistedOptions: ["decision-workspace"],
-      finalDecision: "Create the decision-support workspace case study.",
+      finalDecision: "Сделать кейс про рабочее пространство поддержки решений.",
       rationale:
-        "It gives the broadest coverage of product thinking, interaction logic, and frontend architecture without losing credibility.",
-      nextStep: "Turn the concept into a named product with a strong README and believable seed scenarios.",
+        "Это даёт самое широкое покрытие продуктового мышления, логики взаимодействий и фронтенд-архитектуры без потери достоверности.",
+      nextStep: "Превратить концепт в продукт с названием, сильным описанием и правдоподобными стартовыми сценариями.",
     },
   },
 ];
@@ -680,9 +680,9 @@ export const TEMPLATE_MAP = Object.fromEntries(
 ) as Record<SessionTemplate["id"], SessionTemplate>;
 
 export const OUTPUT_FORMATS: OutputFormat[] = [
-  "Decision memo",
-  "Comparison table",
-  "Recommendation brief",
-  "Executive summary",
-  "Talking points",
+  "Мемо по решению",
+  "Таблица сравнения",
+  "Краткая рекомендация",
+  "Резюме для руководителя",
+  "Тезисы",
 ];

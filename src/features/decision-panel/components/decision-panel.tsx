@@ -30,9 +30,9 @@ export function DecisionPanel({
         <div>
           <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-ink-950/42">
             <Goal className="h-3.5 w-3.5" />
-            Decision panel
+            Панель решения
           </div>
-          <h3 className="mt-3 text-2xl font-semibold text-ink-950">Move from evidence to commitment.</h3>
+          <h3 className="mt-3 text-2xl font-semibold text-ink-950">Перейдите от аргументов к выбору.</h3>
         </div>
         <Badge tone={artifacts.finalDecision ? "sage" : "neutral"}>{decisionStatus}</Badge>
       </div>
@@ -41,7 +41,7 @@ export function DecisionPanel({
         <div>
           <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-ink-950/42">
             <ListChecks className="h-3.5 w-3.5" />
-            Shortlisted options
+            Шорт-лист
           </div>
           <div className="mt-3 space-y-2">
             {artifacts.shortlistedOptions.length ? (
@@ -60,7 +60,7 @@ export function DecisionPanel({
                         <p className="mt-1 text-sm text-ink-950/62">{option.verdict}</p>
                       </div>
                       <Button size="sm" variant="ghost" onClick={() => onQuickPick(option.label)}>
-                        Use
+                        Выбрать
                       </Button>
                     </div>
                   </div>
@@ -68,41 +68,41 @@ export function DecisionPanel({
               })
             ) : (
               <div className="border-b border-ink-950/8 py-3 text-sm text-ink-950/60">
-                No shortlist yet. Promote one or two options from the analysis column before finalizing.
+                Шорт-лист пока пуст. Поднимите один-два варианта из анализа перед финальной формулировкой.
               </div>
             )}
           </div>
         </div>
 
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-ink-950/42">Chosen direction</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-ink-950/42">Выбранное направление</p>
           <EditableTextarea
             value={artifacts.finalDecision}
             onCommit={onFinalDecisionCommit}
             rows={3}
-            placeholder="Capture the choice in one confident sentence."
+            placeholder="Зафиксируйте выбор одной уверенной фразой."
             className="mt-2"
           />
         </div>
 
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-ink-950/42">Rationale</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-ink-950/42">Обоснование</p>
           <EditableTextarea
             value={artifacts.rationale}
             onCommit={onRationaleCommit}
             rows={5}
-            placeholder="Why is this the right path?"
+            placeholder="Почему именно этот путь правильный?"
             className="mt-2"
           />
         </div>
 
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-ink-950/42">Next step</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-ink-950/42">Следующий шаг</p>
           <EditableTextarea
             value={artifacts.nextStep}
             onCommit={onNextStepCommit}
             rows={4}
-            placeholder="What should happen immediately after the decision?"
+            placeholder="Что должно произойти сразу после принятия решения?"
             className="mt-2"
           />
         </div>
@@ -114,12 +114,12 @@ export function DecisionPanel({
             ) : (
               <Circle className="h-4 w-4 text-ink-950/35" />
             )}
-            Final decision readiness
+            Готовность финального решения
           </div>
           <p className="mt-2 text-sm leading-6 text-ink-950/64">
             {artifacts.finalDecision
-              ? "The decision direction is captured. Tighten the rationale and next step, then move to the summary."
-              : "The answer is not locked yet. Use the shortlist and recommendation to sharpen the final call."}
+              ? "Направление решения уже зафиксировано. Уточните обоснование и следующий шаг, затем переходите к итогу."
+              : "Ответ пока не закреплён. Используйте шорт-лист и рекомендацию, чтобы точнее сформулировать финальный выбор."}
           </p>
         </div>
       </div>

@@ -3,6 +3,7 @@ import { Lightbulb, RotateCcw } from "lucide-react";
 import { Badge } from "@/shared/ui/badge";
 import { Button } from "@/shared/ui/button";
 import { Surface } from "@/shared/ui/surface";
+import { getImpactLabel } from "@/shared/lib/labels";
 import { formatConfidence } from "@/shared/lib/time";
 import type { Suggestion } from "@/shared/types/focus-board";
 
@@ -30,16 +31,16 @@ export function SuggestionRail({
           <div>
             <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-ink-950/42">
               <Lightbulb className="h-3.5 w-3.5" />
-              Suggestion rail
+              Лента подсказок
             </div>
-            <h3 className="mt-3 text-2xl font-semibold text-ink-950">Helpful, reversible nudges.</h3>
+            <h3 className="mt-3 text-2xl font-semibold text-ink-950">Полезные и обратимые подсказки.</h3>
             <p className="mt-2 text-sm leading-6 text-ink-950/64">
-              FocusBoard recommends light adjustments when the interaction pattern clearly points to one.
+              FocusBoard предлагает лёгкие корректировки только тогда, когда поведение пользователя явно на них указывает.
             </p>
           </div>
           <Button variant="ghost" size="sm" onClick={onUndo} disabled={!canUndo}>
             <RotateCcw className="h-4 w-4" />
-            Undo
+            Отменить
           </Button>
         </div>
 
@@ -63,10 +64,10 @@ export function SuggestionRail({
                             : "neutral"
                       }
                     >
-                      {suggestion.impact} impact
+                      {getImpactLabel(suggestion.impact)}
                     </Badge>
                     <span className="text-xs text-ink-950/45">
-                      Confidence {formatConfidence(suggestion.confidence)}
+                      Уверенность {formatConfidence(suggestion.confidence)}
                     </span>
                   </div>
                   <h4 className="mt-3 text-base font-semibold text-ink-950">{suggestion.title}</h4>
@@ -79,10 +80,10 @@ export function SuggestionRail({
                       {suggestion.actionLabel}
                     </Button>
                     <Button size="sm" variant="secondary" onClick={() => onDismiss(suggestion.id)}>
-                      Dismiss
+                      Скрыть
                     </Button>
                     <Button size="sm" variant="ghost" onClick={() => onDisableSimilar(suggestion.id)}>
-                      Disable similar
+                      Скрывать похожие
                     </Button>
                   </div>
                 </div>
@@ -90,9 +91,9 @@ export function SuggestionRail({
             ))
           ) : (
             <div className="border-t border-ink-950/8 pt-4">
-              <p className="text-sm font-semibold text-ink-950">No active suggestions right now.</p>
+              <p className="text-sm font-semibold text-ink-950">Сейчас активных подсказок нет.</p>
               <p className="mt-2 text-sm leading-6 text-ink-950/60">
-                The workspace stays calm until there is a clear, low-risk recommendation to make.
+                Рабочее пространство остаётся спокойным, пока не появится ясная и безопасная рекомендация.
               </p>
             </div>
           )}

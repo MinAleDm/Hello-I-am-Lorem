@@ -26,16 +26,16 @@ export function getBehaviorMode(
 export function getBehaviorCopy(mode: BehaviorMode) {
   switch (mode) {
     case "reviewing":
-      return "You are spending longer with the evidence, so the workspace is leaning toward review support.";
+      return "Вы дольше работаете с доказательствами, поэтому интерфейс смещается в сторону спокойного разбора.";
     case "comparing":
-      return "You are weighing options side by side, so comparison support matters more right now.";
+      return "Сейчас вы сравниваете варианты бок о бок, поэтому поддержка сравнения становится важнее.";
     case "deciding":
-      return "You are moving from analysis into commitment, so summary and rationale support are more useful.";
+      return "Вы переходите от анализа к выбору, поэтому особенно полезны итог и обоснование.";
     case "finalizing":
-      return "The session is close to complete. FocusBoard is keeping the final rationale and next step in view.";
+      return "Сессия почти завершена. FocusBoard удерживает в поле зрения финальное обоснование и следующий шаг.";
     case "scanning":
     default:
-      return "You are still shaping the problem space. The workspace stays broad, stable, and easy to scan.";
+      return "Вы ещё очерчиваете пространство задачи. Рабочая область остаётся широкой, стабильной и удобной для обзора.";
   }
 }
 
@@ -43,23 +43,23 @@ export function getLearnedTendencies(behavior: BehaviorSignals) {
   const tendencies: string[] = [];
 
   if ((behavior.sectionReopens.insights ?? 0) >= 2) {
-    tendencies.push("You tend to revisit insights before narrowing options.");
+    tendencies.push("Вы обычно возвращаетесь к инсайтам перед тем, как сузить набор вариантов.");
   }
 
   if (behavior.compareActions >= 3) {
-    tendencies.push("You make progress by comparing options directly rather than reading them in isolation.");
+    tendencies.push("Вы лучше продвигаетесь, когда сравниваете варианты напрямую, а не читаете их по отдельности.");
   }
 
   if (behavior.layoutToggles >= 2) {
-    tendencies.push("You actively tune the workspace, so layout preferences are worth preserving.");
+    tendencies.push("Вы активно настраиваете рабочее пространство, поэтому ваши предпочтения по компоновке стоит сохранять.");
   }
 
   if (behavior.noteEdits >= 2) {
-    tendencies.push("You refine the decision note iteratively before committing.");
+    tendencies.push("Перед финальным выбором вы обычно несколько раз уточняете формулировку решения.");
   }
 
   if (!tendencies.length) {
-    tendencies.push("This session stayed relatively light, so FocusBoard kept the workspace calm and unchanged.");
+    tendencies.push("Сессия прошла спокойно, поэтому FocusBoard сохранил интерфейс без лишних изменений.");
   }
 
   return tendencies;
