@@ -1,18 +1,37 @@
 {
-  "name": "thinking-ui-studio",
-  "version": "2.0.0",
-  "description": "Static adaptive frontend case study with explainable UI changes, local-first memory and GitHub Pages deployment.",
-  "main": "src/scripts/app.js",
+  "name": "focusboard",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Explainable decision-support workspace with deterministic adaptive suggestions and local-first persistence.",
   "scripts": {
-    "test": "node ./node_modules/jest/bin/jest.js",
-    "test:report": "node ./node_modules/jest/bin/jest.js --json --outputFile=src/test-results.json"
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@fontsource/manrope": "^5.1.1",
+    "@fontsource/newsreader": "^5.1.1",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.12.1",
+    "lucide-react": "^0.511.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "zustand": "^5.0.4"
   },
   "devDependencies": {
-    "jest": "^29.7.0",
-    "jest-environment-jsdom": "^29.7.0",
-    "jsdom": "^20.0.0"
-  },
-  "jest": {
-    "testEnvironment": "jest-environment-jsdom"
+    "@testing-library/react": "^16.3.0",
+    "@types/node": "^22.15.3",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.4.1",
+    "autoprefixer": "^10.4.21",
+    "jsdom": "^26.1.0",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.8.3",
+    "vite": "^5.4.18",
+    "vitest": "^2.1.9"
   }
 }

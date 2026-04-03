@@ -1,3 +1,6 @@
 node_modules/
 .npm-cache/
 _site/
+dist/
+coverage/
+*.tsbuildinfo

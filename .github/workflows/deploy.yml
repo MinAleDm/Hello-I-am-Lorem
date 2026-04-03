@@ -35,13 +35,11 @@ jobs:
       - name: Run test suite
         run: npm test
 
-      - name: Generate test report
-        run: npm run test:report
+      - name: Build app
+        run: npm run build
 
-      - name: Prepare static artifact
-        run: |
-          mkdir -p _site
-          cp -R src/. _site
+      - name: Add nojekyll marker
+        run: touch dist/.nojekyll
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
@@ -49,7 +47,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: _site
+          path: dist
 
       - name: Deploy to GitHub Pages
         id: deployment

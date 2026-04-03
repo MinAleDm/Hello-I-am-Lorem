@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color: #111111;
+    background: #ffffff;
+    font-family: Manrope, ui-sans-serif, system-ui, sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  * {
+    @apply border-ink-900/10;
+  }
+
+  body {
+    @apply min-h-screen bg-transparent text-ink-950;
+  }
+
+  #root {
+    @apply min-h-screen;
+  }
+
+  ::selection {
+    @apply bg-ink-950/10 text-ink-950;
+  }
+}
+
+@layer components {
+  .panel-surface {
+    @apply rounded-[24px] border border-black/10 bg-white shadow-none;
+  }
+
+  .subtle-grid {
+    background-image: none;
+  }
+}
