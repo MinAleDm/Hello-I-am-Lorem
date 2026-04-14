@@ -1,4 +1,4 @@
-import { ArrowLeft, CheckCheck, Clock3, EyeOff, Settings2 } from "lucide-react";
+import { ArrowLeft, CheckCheck, Clock3, EyeOff, FileJson2, FileText, Printer, Settings2 } from "lucide-react";
 import { getLearnedTendencies } from "@/entities/behavior/selectors";
 import { Badge } from "@/shared/ui/badge";
 import { Button } from "@/shared/ui/button";
@@ -11,7 +11,14 @@ import {
 import { FocusBoardLogo } from "@/shared/ui/focusboard-logo";
 import { Surface } from "@/shared/ui/surface";
 import { formatDateTime } from "@/shared/lib/time";
-import type { BehaviorSignals, DecisionArtifacts, Session, Suggestion, WorkspaceState } from "@/shared/types/focus-board";
+import type {
+  BehaviorSignals,
+  DecisionArtifacts,
+  Session,
+  SessionSnapshot,
+  Suggestion,
+  WorkspaceState,
+} from "@/shared/types/focus-board";
 
 interface SummaryViewProps {
   session: Session;
@@ -19,8 +26,12 @@ interface SummaryViewProps {
   suggestions: Suggestion[];
   behavior: BehaviorSignals;
   workspace: WorkspaceState;
+  currentSnapshot: SessionSnapshot | null;
   onBack: () => void;
   onReset: () => void;
+  onExportJson: () => void;
+  onExportMarkdown: () => void;
+  onExportPdf: () => void;
 }
 
 export function SummaryView({
@@ -29,8 +40,12 @@ export function SummaryView({
   suggestions,
   behavior,
   workspace,
+  currentSnapshot,
   onBack,
   onReset,
+  onExportJson,
+  onExportMarkdown,
+  onExportPdf,
 }: SummaryViewProps) {
   const accepted = suggestions.filter((suggestion) => suggestion.status === "applied");
   const dismissed = suggestions.filter((suggestion) => suggestion.status === "dismissed");
@@ -132,6 +147,31 @@ export function SummaryView({
         </Surface>
 
         <div className="space-y-6">
+          <Surface className="rounded-[24px] p-6">
+            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-ink-950/42">
+              <FileText className="h-3.5 w-3.5" />
+              Экспорт результата
+            </div>
+            <p className="mt-4 text-sm leading-6 text-ink-950/64">
+              Сохраните итог как JSON для повторного импорта, как Markdown для документации или откройте печатный вид
+              для сохранения в PDF.
+            </p>
+            <div className="mt-5 flex flex-wrap gap-2">
+              <Button variant="secondary" onClick={onExportJson} disabled={!currentSnapshot}>
+                <FileJson2 className="h-4 w-4" />
+                JSON
+              </Button>
+              <Button variant="secondary" onClick={onExportMarkdown} disabled={!currentSnapshot}>
+                <FileText className="h-4 w-4" />
+                Markdown
+              </Button>
+              <Button variant="ghost" onClick={onExportPdf} disabled={!currentSnapshot}>
+                <Printer className="h-4 w-4" />
+                PDF
+              </Button>
+            </div>
+          </Surface>
+
           <Surface className="rounded-[24px] p-6">
             <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-ink-950/42">
               <CheckCheck className="h-3.5 w-3.5" />

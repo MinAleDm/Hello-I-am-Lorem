@@ -2,19 +2,40 @@ import { useMemo, useState } from "react";
 import { Check, Compass, Layers3, LockKeyhole, Sparkles } from "lucide-react";
 import { getDefaultDraft } from "@/app/store/use-focus-board-store";
 import { createDraftFromTemplate } from "@/entities/session/model";
+import { SessionLibraryPanel } from "@/features/session-library/components/session-library-panel";
 import { OUTPUT_FORMATS, SESSION_TEMPLATES } from "@/shared/config/templates";
 import { FocusBoardLogo } from "@/shared/ui/focusboard-logo";
 import { Button } from "@/shared/ui/button";
 import { InputField, SelectField, TextareaField } from "@/shared/ui/field";
 import { Surface } from "@/shared/ui/surface";
 import { TemplateCard } from "@/features/session-start/components/template-card";
-import type { SessionDraft, SessionTemplateId } from "@/shared/types/focus-board";
+import type { SessionDraft, SessionSnapshot, SessionTemplateId } from "@/shared/types/focus-board";
 
 interface SessionStartScreenProps {
   onStart: (draft: SessionDraft) => void;
+  sessions: SessionSnapshot[];
+  activeSessionId: string | null;
+  onOpenSession: (sessionId: string) => void;
+  onDuplicateSession: (sessionId: string) => void;
+  onDeleteSession: (sessionId: string) => void;
+  onExportJson: (sessionId: string) => void;
+  onExportMarkdown: (sessionId: string) => void;
+  onExportPdf: (sessionId: string) => void;
+  onImportFile: (file: File) => Promise<void>;
 }
 
-export function SessionStartScreen({ onStart }: SessionStartScreenProps) {
+export function SessionStartScreen({
+  onStart,
+  sessions,
+  activeSessionId,
+  onOpenSession,
+  onDuplicateSession,
+  onDeleteSession,
+  onExportJson,
+  onExportMarkdown,
+  onExportPdf,
+  onImportFile,
+}: SessionStartScreenProps) {
   const [draft, setDraft] = useState<SessionDraft>(getDefaultDraft());
   const selectedTemplate = useMemo(
     () => SESSION_TEMPLATES.find((template) => template.id === draft.template) ?? SESSION_TEMPLATES[0],
@@ -184,6 +205,18 @@ export function SessionStartScreen({ onStart }: SessionStartScreenProps) {
           </Surface>
         </section>
       </div>
+
+      <SessionLibraryPanel
+        sessions={sessions}
+        activeSessionId={activeSessionId}
+        onOpenSession={onOpenSession}
+        onDuplicateSession={onDuplicateSession}
+        onDeleteSession={onDeleteSession}
+        onExportJson={onExportJson}
+        onExportMarkdown={onExportMarkdown}
+        onExportPdf={onExportPdf}
+        onImportFile={onImportFile}
+      />
     </div>
   );
 }

@@ -27,6 +27,7 @@ function createBaseState(): FocusBoardStoreState {
     undoStack: [],
     lastActionNote: null,
     startedAt: new Date().toISOString(),
+    sessionLibrary: [],
   };
 }
 

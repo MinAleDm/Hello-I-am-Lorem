@@ -10,5 +10,5 @@ export function toText(value: string[]) {
 }
 
 export function buildSessionId() {
-  return `session-${Date.now()}`;
+  return `session-${Date.now()}-${Math.round(Math.random() * 1_000_000)}`;
 }

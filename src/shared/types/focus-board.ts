@@ -164,6 +164,18 @@ export interface UndoEntry {
   artifacts: DecisionArtifacts;
 }
 
+export interface SessionSnapshot {
+  schemaVersion: 1;
+  savedAt: string;
+  startedAt: string | null;
+  session: Session;
+  artifacts: DecisionArtifacts;
+  workspace: WorkspaceState;
+  behavior: BehaviorSignals;
+  suggestions: Suggestion[];
+  disabledSuggestionTypes: SuggestionType[];
+}
+
 export interface FocusBoardStoreState {
   stage: AppStage;
   session: Session | null;
@@ -175,6 +187,7 @@ export interface FocusBoardStoreState {
   undoStack: UndoEntry[];
   lastActionNote: string | null;
   startedAt: string | null;
+  sessionLibrary: SessionSnapshot[];
 }
 
 export interface SessionDraft {

@@ -1,5 +1,11 @@
 # FocusBoard
 
+[![CI](https://github.com/minkinad/focusboard/actions/workflows/ci.yml/badge.svg)](https://github.com/minkinad/focusboard/actions/workflows/ci.yml)
+[![Deploy GitHub Pages](https://github.com/minkinad/focusboard/actions/workflows/deploy.yml/badge.svg)](https://github.com/minkinad/focusboard/actions/workflows/deploy.yml)
+![React](https://img.shields.io/badge/React-18-111111?logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-111111?logo=typescript)
+![Vite](https://img.shields.io/badge/Vite-5-111111?logo=vite)
+
 FocusBoard — это локальный frontend-only продукт для поддержки принятия решений. Он помогает превратить расплывчатый вопрос в понятную структуру: краткую сводку, набор вариантов, компромиссы, риски, рекомендацию и финальное решение.
 
 Проект задуман как спокойный, объяснимый и правдоподобный инструмент, а не как очередной "умный" интерфейс, который внезапно всё перестраивает за пользователя.
@@ -221,10 +227,13 @@ npm run build
 npm test
 ```
 
+CI:
+
+- workflow `CI` запускается на `push` в `main`/`master` и на каждый `pull_request`
+- pipeline проверяет `npm ci`, `npm test` и `npm run build`
+
 ## Что можно развить дальше
 
-- экспорт итогового решения в PDF или shareable brief
-- история нескольких сохранённых сессий
 - более глубокое редактирование инсайтов, рисков и tradeoffs
 - настройка весов критериев решения
 - быстрые клавиатурные команды для опытных пользователей

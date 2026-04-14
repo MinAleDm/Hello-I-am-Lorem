@@ -1,10 +1,19 @@
 import { useEffect } from "react";
 import { useShallow } from "zustand/react/shallow";
-import { WorkspaceView } from "@/features/workspace/components/workspace-view";
+import { useFocusBoardStore } from "@/app/store/use-focus-board-store";
 import { SessionStartScreen } from "@/features/session-start/components/session-start-screen";
 import { SummaryView } from "@/features/summary/components/summary-view";
+import { WorkspaceView } from "@/features/workspace/components/workspace-view";
+import {
+  buildSessionExportFileName,
+  buildSessionMarkdown,
+  createSessionSnapshot,
+  downloadTextFile,
+  openSessionPrintView,
+  parseSessionSnapshot,
+  serializeSessionSnapshot,
+} from "@/shared/lib/session-library";
 import { useWorkspaceScroll } from "@/shared/hooks/use-workspace-scroll";
-import { useFocusBoardStore } from "@/app/store/use-focus-board-store";
 
 export function FocusBoardPage() {
   const state = useFocusBoardStore(
@@ -19,6 +28,7 @@ export function FocusBoardPage() {
       undoStack: store.undoStack,
       lastActionNote: store.lastActionNote,
       startedAt: store.startedAt,
+      sessionLibrary: store.sessionLibrary,
     })),
   );
 
@@ -27,6 +37,10 @@ export function FocusBoardPage() {
   const goToStart = useFocusBoardStore((store) => store.goToStart);
   const goToSummary = useFocusBoardStore((store) => store.goToSummary);
   const goToWorkspace = useFocusBoardStore((store) => store.goToWorkspace);
+  const loadSession = useFocusBoardStore((store) => store.loadSession);
+  const deleteSession = useFocusBoardStore((store) => store.deleteSession);
+  const duplicateSession = useFocusBoardStore((store) => store.duplicateSession);
+  const importSession = useFocusBoardStore((store) => store.importSession);
   const updateSessionField = useFocusBoardStore((store) => store.updateSessionField);
   const updateSessionListField = useFocusBoardStore((store) => store.updateSessionListField);
   const updateArtifactText = useFocusBoardStore((store) => store.updateArtifactText);
@@ -48,6 +62,68 @@ export function FocusBoardPage() {
 
   useWorkspaceScroll(state.stage === "workspace", recordScroll);
 
+  const currentSnapshot =
+    state.session && state.artifacts
+      ? createSessionSnapshot({
+          session: state.session,
+          artifacts: state.artifacts,
+          workspace: state.workspace,
+          behavior: state.behavior,
+          suggestions: state.suggestions,
+          disabledSuggestionTypes: state.disabledSuggestionTypes,
+          startedAt: state.startedAt,
+        })
+      : null;
+
+  function getSnapshotById(sessionId: string) {
+    return state.sessionLibrary.find((entry) => entry.session.id === sessionId) ?? null;
+  }
+
+  function exportSessionJson(sessionId: string) {
+    const snapshot = getSnapshotById(sessionId);
+
+    if (!snapshot) {
+      return;
+    }
+
+    downloadTextFile(
+      buildSessionExportFileName(snapshot, "json"),
+      serializeSessionSnapshot(snapshot),
+      "application/json",
+    );
+  }
+
+  function exportSessionMarkdown(sessionId: string) {
+    const snapshot = getSnapshotById(sessionId);
+
+    if (!snapshot) {
+      return;
+    }
+
+    downloadTextFile(
+      buildSessionExportFileName(snapshot, "md"),
+      buildSessionMarkdown(snapshot),
+      "text/markdown",
+    );
+  }
+
+  function exportSessionPdf(sessionId: string) {
+    const snapshot = getSnapshotById(sessionId);
+
+    if (!snapshot) {
+      return;
+    }
+
+    openSessionPrintView(snapshot);
+  }
+
+  async function handleImportFile(file: File) {
+    const text = await file.text();
+    const snapshot = parseSessionSnapshot(text);
+
+    importSession(snapshot);
+  }
+
   useEffect(() => {
     if (!state.lastActionNote) {
       return;
@@ -62,7 +138,20 @@ export function FocusBoardPage() {
 
   return (
     <div className="relative min-h-screen">
-      {state.stage === "start" ? <SessionStartScreen onStart={startSession} /> : null}
+      {state.stage === "start" ? (
+        <SessionStartScreen
+          onStart={startSession}
+          sessions={state.sessionLibrary}
+          activeSessionId={state.session?.id ?? null}
+          onOpenSession={loadSession}
+          onDuplicateSession={duplicateSession}
+          onDeleteSession={deleteSession}
+          onExportJson={exportSessionJson}
+          onExportMarkdown={exportSessionMarkdown}
+          onExportPdf={exportSessionPdf}
+          onImportFile={handleImportFile}
+        />
+      ) : null}
 
       {state.stage === "workspace" ? (
         <WorkspaceView
@@ -107,8 +196,38 @@ export function FocusBoardPage() {
           suggestions={state.suggestions}
           behavior={state.behavior}
           workspace={state.workspace}
+          currentSnapshot={currentSnapshot}
           onBack={goToWorkspace}
           onReset={resetApp}
+          onExportJson={() => {
+            if (!currentSnapshot) {
+              return;
+            }
+
+            downloadTextFile(
+              buildSessionExportFileName(currentSnapshot, "json"),
+              serializeSessionSnapshot(currentSnapshot),
+              "application/json",
+            );
+          }}
+          onExportMarkdown={() => {
+            if (!currentSnapshot) {
+              return;
+            }
+
+            downloadTextFile(
+              buildSessionExportFileName(currentSnapshot, "md"),
+              buildSessionMarkdown(currentSnapshot),
+              "text/markdown",
+            );
+          }}
+          onExportPdf={() => {
+            if (!currentSnapshot) {
+              return;
+            }
+
+            openSessionPrintView(currentSnapshot);
+          }}
         />
       ) : null}
 
